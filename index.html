@@ -188,6 +188,14 @@ details.full summary{cursor:pointer;font-weight:700;color:var(--brand)}
 .full-grid h3{font-size:1rem;margin-bottom:8px}
 .full-grid ul{margin:0;padding-left:18px;color:var(--muted);font-size:.93rem;display:grid;gap:4px}
 
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.why-grid{grid-template-columns:1fr}}
+.why{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:grid;gap:12px;align-content:start;min-width:0}
+.why-k{justify-self:start;font:600 .7rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:6px 8px;border-radius:4px;background:var(--brand-soft);color:var(--brand)}
+.why p{color:var(--muted)}
+.why-list{list-style:none;margin:4px 0 0;padding:14px 0 0;border-top:1px dashed var(--line);display:grid;gap:8px}
+.why-list li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:.95rem}
+.why-list li::before{content:"✓";color:var(--brand);font-weight:800}
 /* pricing */
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 @media (max-width:900px){.plans{grid-template-columns:1fr}}
@@ -309,7 +317,7 @@ footer .logo-text{color:var(--band-ink)}
     <nav class="links" aria-label="Main">
       <a href="#services">Services</a>
       <a href="#pricing">Pricing</a>
-      <a href="#routine">Our routine</a>
+      <a href="#why">Why us</a>
       <a href="#before-after">Before &amp; after</a>
       <a href="#areas">Areas</a>
       <a href="#about">About</a>
@@ -504,19 +512,46 @@ footer .logo-text{color:var(--band-ink)}
     </div>
   </section>
 
-  <section id="routine" aria-labelledby="rt-h">
+  <section id="why" aria-labelledby="why-h">
     <div class="wrap">
       <div class="head">
-        <p class="eyebrow">The Priority Routine</p>
-        <h2 id="rt-h">21 things we do on every job.</h2>
-        <p class="lede">A lot of crews show up, blast and leave. We work through a printed five-stage checklist, and you can read the whole thing here. Tap a stage.</p>
+        <p class="eyebrow">Why Priority</p>
+        <h2 id="why-h">Better methods. Better service. Results that last.</h2>
+        <p class="lede">Coastal air, humidity, pollen and storms are hard on glass, siding and concrete. Here's how we handle it differently.</p>
       </div>
-      <div class="tabs" role="tablist" id="tabs"></div>
-      <div class="panel" role="tabpanel" id="panel" aria-live="polite"></div>
-      <details class="full">
-        <summary>Read the full routine</summary>
-        <div class="full-grid" id="full"></div>
-      </details>
+      <div class="why-grid">
+        <article class="why">
+          <span class="why-k">Method</span>
+          <h3>Advanced cleaning technology</h3>
+          <p>High pressure can strip paint and damage masonry, so we soft wash with eco-friendly solutions that kill algae and moss at the root. On windows, our purified-water systems leave a spot-free finish with none of the mineral deposits tap water leaves behind.</p>
+          <ul class="why-list">
+            <li>Window frames and delicate seals stay protected</li>
+            <li>Landscaping and flower beds are rinsed and covered</li>
+            <li>Siding and architectural details are never blasted</li>
+          </ul>
+        </article>
+        <article class="why">
+          <span class="why-k">Service</span>
+          <h3>A smooth experience, start to finish</h3>
+          <p>From your first call to the final walkthrough, you get clear estimates, dependable timing and respectful communication. We treat your property the way we'd treat our own.</p>
+          <ul class="why-list">
+            <li>We arrive when we say we will</li>
+            <li>Gates closed, debris cleared, entryways respected</li>
+            <li>Final walkthrough with you before we leave</li>
+          </ul>
+        </article>
+        <article class="why">
+          <span class="why-k">Value</span>
+          <h3>Protection that pays off</h3>
+          <p>Regular cleaning does more than look good. It stops the slow damage that salt, pollen and organic growth cause over time.</p>
+          <ul class="why-list">
+            <li>Removes corrosive salt and mineral deposits from glass</li>
+            <li>Helps prevent hard-water stains from etching windows</li>
+            <li>Spots early signs of seal wear or frame damage</li>
+            <li>Protects curb appeal and long-term property value</li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -680,7 +715,7 @@ footer .logo-text{color:var(--band-ink)}
         <span><a href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener">Google Maps</a> · <a href="https://www.facebook.com/profile.php?id=61586062044409" target="_blank" rel="noopener">Facebook</a></span>
       </div>
       <div><h4>Services</h4><ul><li><a href="#services">House washing</a></li><li><a href="#services">Driveway &amp; concrete</a></li><li><a href="#services">Roof washing</a></li><li><a href="#services">Deck &amp; fence</a></li><li><a href="#services">Window cleaning</a></li><li><a href="#services">Holiday lighting</a></li><li><a href="#services">Commercial &amp; HOA</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="#about">About</a></li><li><a href="#routine">Our routine</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#before-after">Before &amp; after</a></li><li><a href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener">Leave a review</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#about">About</a></li><li><a href="#why">Why us</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#before-after">Before &amp; after</a></li><li><a href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener">Leave a review</a></li></ul></div>
       <div><h4>Areas</h4><ul><li>Virginia Beach</li><li>Chesapeake</li><li>Norfolk</li><li>Suffolk</li><li>Williamsburg</li><li><a href="#areas">All areas</a></li></ul></div>
     </div>
     <div class="legal"><span>© 2026 Priority Window Cleaning · Virginia Beach, VA. Satisfaction guaranteed.</span><span>Privacy · Terms</span></div>
@@ -767,32 +802,6 @@ footer .logo-text{color:var(--band-ink)}
   // before/after
   $('ba-range').addEventListener('input',function(e){$('ba-stage').style.setProperty('--cut',e.target.value+'%')});
 
-  // routine
-  var R=[
-    ['Walk it',['We walk the property with you and point out what will and won\'t come off','Each surface gets matched to a pressure and a mix: siding, shingles, concrete, wood, glass','Plants, beds and lawn get soaked down and covered where needed','Outlets, fixtures and lights covered','Your price is confirmed before a single hose comes off the truck']],
-    ['Pre-treat',['Biodegradable soft-wash detergent on siding and roofs, so the solution does the work instead of the pressure','Oil, rust and organic stains on concrete get their own pre-treatment','Wood gets a brightener so the grain comes back instead of furring up','Screens pulled, labeled and set aside for washing']],
-    ['Wash',['Siding and roofs rinsed at garden-hose pressure','Concrete cleaned with a rotary surface cleaner, so there are no zebra stripes','Edges, corners and steps hand-wanded','Gutter faces hand-brushed for the tiger stripes']],
-    ['Rinse & glass',['Every plant and bed rinsed and neutralized','Post-treatment on concrete to slow regrowth','Glass finished with pure water or a squeegee, leaving no detergent haze','Runoff directed away from beds and storm drains']],
-    ['Walk it again',['Final walkthrough with you, and before and after photos texted to you','Anything we missed gets fixed on the spot','Pay once you\'re happy, by card or text-to-pay','A reminder when it\'s time again, if you want one']]
-  ];
-  var tabs=$('tabs'), panel=$('panel'), full=$('full');
-  function show(i){
-    [].forEach.call(tabs.children,function(t,j){t.setAttribute('aria-selected',j===i);t.tabIndex=j===i?0:-1});
-    panel.innerHTML='';var ul=document.createElement('ul');
-    R[i][1].forEach(function(x){var li=document.createElement('li');li.textContent=x;ul.appendChild(li)});
-    panel.appendChild(ul);
-  }
-  R.forEach(function(r,i){
-    var b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.id='tab-'+i;
-    b.innerHTML='<b>0'+(i+1)+'</b>';b.appendChild(document.createTextNode(r[0]));
-    b.addEventListener('click',function(){show(i)});
-    b.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=(i+(e.key==='ArrowRight'?1:R.length-1))%R.length;show(n);tabs.children[n].focus()}});
-    tabs.appendChild(b);
-    var d=document.createElement('div'),h=document.createElement('h3'),ul=document.createElement('ul');
-    h.textContent=(i+1)+'. '+r[0];r[1].forEach(function(x){var li=document.createElement('li');li.textContent=x;ul.appendChild(li)});
-    d.appendChild(h);d.appendChild(ul);full.appendChild(d);
-  });
-  show(0);
 })();
 </script>
 </body>
