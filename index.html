@@ -223,6 +223,7 @@ details.full summary{cursor:pointer;font-weight:700;color:var(--brand)}
 .owner{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center}
 @media (max-width:860px){.owner{grid-template-columns:1fr}}
 .portrait{aspect-ratio:4/5;max-width:100%;border-radius:var(--r);background:linear-gradient(160deg,var(--brand),var(--ink));position:relative;display:grid;place-items:center;color:var(--brand-ink);overflow:hidden}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 .portrait .ini{font:900 clamp(5rem,14vw,9rem)/1 var(--display);font-stretch:125%;letter-spacing:-.04em;opacity:.95}
 .portrait figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 18px;background:rgba(0,0,0,.35);color:#fff;font:600 .78rem/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .owner .body{display:grid;gap:16px}
@@ -578,8 +579,8 @@ footer .logo-text{color:var(--band-ink)}
   <section id="about" aria-labelledby="ab-h" style="padding-top:0">
     <div class="wrap owner">
       <figure class="portrait" style="margin:0">
-        <span class="ini" aria-hidden="true">JP</span>
-        <figcaption>Jeff Parks, owner · photo coming soon</figcaption>
+        <img src="images/jeff-parks.jpg" width="900" height="1125" alt="Jeff Parks, owner of Priority Window Cleaning" loading="lazy">
+        <figcaption>Jeff Parks · Owner</figcaption>
       </figure>
       <div class="body">
         <p class="eyebrow">Who shows up</p>
