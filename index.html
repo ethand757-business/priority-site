@@ -176,6 +176,18 @@ textarea{min-height:84px;resize:vertical}
 .coupon .deal div{display:flex;gap:14px;align-items:baseline}
 .coupon .deal b{font:850 1.9rem/1 var(--display);color:var(--link);min-width:3.4ch}
 
+.rv-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:36px}
+.gscore{display:grid;grid-template-columns:auto auto;column-gap:12px;align-items:center;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 20px}
+.gscore b{grid-row:span 2;font:850 2.6rem/1 var(--display)}
+.gscore span:last-child{font-size:.85rem;color:var(--muted)}
+.rstars{color:#F2B01E;letter-spacing:2px;font-size:1.05rem}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:980px){.reviews{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.reviews{grid-template-columns:1fr}}
+.review{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:grid;grid-template-rows:auto 1fr auto;gap:14px}
+.review blockquote{margin:0;color:var(--ink);font-size:.98rem;line-height:1.6}
+.review figcaption{display:grid;gap:2px;padding-top:14px;border-top:1px solid var(--line)}
+.review figcaption span{font-size:.84rem;color:var(--muted)}
 /* areas */
 .areas{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 @media (max-width:860px){.areas{grid-template-columns:1fr}}
@@ -404,17 +416,53 @@ footer .logo-text small.sub2{color:#6FD0EE}
 
   <section id="reviews" aria-labelledby="rv-h">
     <div class="wrap">
-      <div class="head">
-        <p class="kicker">Reviews &amp; offers</p>
-        <h2 id="rv-h">Hear it from the neighbors.</h2>
+      <div class="rv-head">
+        <div class="head" style="margin-bottom:0">
+          <p class="kicker">Reviews</p>
+          <h2 id="rv-h">Hear it from the neighbors.</h2>
+        </div>
+        <a class="gscore" href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener" aria-label="Rated 5.0 out of 5 on Google. Read all reviews.">
+          <b>5.0</b><span class="rstars" aria-hidden="true">★★★★★</span><span>Every review on Google is 5 stars</span>
+        </a>
       </div>
-      <div class="rev">
+      <div class="reviews">
+        <figure class="review">
+          <span class="rstars" aria-label="5 out of 5 stars">★★★★★</span>
+          <blockquote>Priority Window Cleaning does great work. I've interacted with Jeff multiple times and he and Matt were 100% on point. I vouch for them wholeheartedly.</blockquote>
+          <figcaption><b>Johnny E.</b><span>Interior &amp; exterior window cleaning</span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="rstars" aria-label="5 out of 5 stars">★★★★★</span>
+          <blockquote>Priority Window Cleaning did an amazing job on our home! Super friendly and professional!</blockquote>
+          <figcaption><b>Christy J.</b><span>Interior &amp; exterior window cleaning</span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="rstars" aria-label="5 out of 5 stars">★★★★★</span>
+          <blockquote>We've been using Priority for window cleaning and power washing our house for a couple of years. Jeff has always been on time and done an excellent job. We would highly recommend him. He does quality work and a fair price.</blockquote>
+          <figcaption><b>Kevin L.</b><span>Window cleaning &amp; power washing</span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="rstars" aria-label="5 out of 5 stars">★★★★★</span>
+          <blockquote>I hired these guys to clean the windows, siding, decking and trim on my house. Jeff always showed up on time and was efficient at getting me a quote and getting the work done. He takes pride in his work and made sure we were 100% happy with the job. I wouldn't hesitate to call them again.</blockquote>
+          <figcaption><b>Kara M.</b><span>Windows, siding, deck &amp; trim</span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="rstars" aria-label="5 out of 5 stars">★★★★★</span>
+          <blockquote>His attention to detail doesn't go unnoticed. I always know I can count on him to get the job done correctly and done in a timely manner. He's punctual, orderly, thorough and always checks his work after he has completed it… Thanks Jeff, you make my job as property manager so much easier!</blockquote>
+          <figcaption><b>Lori B.</b><span>Property manager · rooftop, skylight &amp; window cleaning</span></figcaption>
+        </figure>
+        <figure class="review">
+          <span class="rstars" aria-label="5 out of 5 stars">★★★★★</span>
+          <blockquote>Jeff is one of the hardest workers that I know of today. He cleans the windows of the business I work at inside and out (approximately 50 very large) and does a fantastic job every time. They always come out pristine and brand new looking.</blockquote>
+          <figcaption><b>Lauren A.</b><span>Commercial window cleaning</span></figcaption>
+        </figure>
+      </div>
+      <div class="rev" style="margin-top:24px">
         <div class="card">
-          <span class="stars" aria-hidden="true">◆◆◆◆◆</span>
-          <h3>Read our Google reviews</h3>
-          <p>See what Virginia Beach homeowners and businesses say about working with us, and see photos of recent jobs on Facebook.</p>
+          <h3>See every review</h3>
+          <p>Read the full list on Google, leave a review of your own, or see photos of recent jobs on Facebook.</p>
           <div class="row">
-            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener">Google reviews</a>
+            <a class="btn btn-primary btn-sm" href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener">All Google reviews</a>
             <a class="btn btn-line btn-sm" href="https://www.google.com/maps?cid=9292761169929349653" target="_blank" rel="noopener">Leave a review</a>
             <a class="btn btn-line btn-sm" href="https://www.facebook.com/profile.php?id=61586062044409" target="_blank" rel="noopener">Facebook</a>
           </div>
