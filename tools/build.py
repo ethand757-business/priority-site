@@ -53,6 +53,24 @@ AREAS = [
     ('service-areas/outer-banks-nc-window-washing', 'Outer Banks', 'NC'),
 ]
 AREA_NAMES = {p: f'{n}, {s}' for p, n, s in AREAS}
+BLOG = 'window-cleaning-articles'
+# Same order as the articles page on windowcleaningva.com (newest first there).
+ARTICLES = [BLOG + '/' + slug for slug in [
+    'top-7-signs-your-home-needs-professional-pressure-washing',
+    'the-hidden-health-risks-of-mold-and-mildew-on-your-homes-exterior',
+    'deck-and-patio-cleaning-get-your-outdoor-space-ready-for-summer-entertaining',
+    'top-5-signs-your-home-needs-professional-pressure-washing-before-summer',
+    'how-coastal-weather-affects-your-windows-and-what-to-do-about-it',
+    'why-spring-is-the-best-time-to-pressure-wash-your-home-in-virginia-beach',
+    'how-awning-cleaning-extends-the-life-of-your-outdoor-shades',
+    'how-water-fed-pole-window-cleaning-reduces-risk-on-commercial-jobs',
+    'pressure-washing-vs-soft-washing-understanding-the-difference',
+]]
+
+
+def article_title(path):
+    # Short title from the page <title>, before the first " | "
+    return html.unescape(DATA[path]['title'].split(' | ')[0]).strip()
 
 REVIEWS = {
     'kevin': ("We've been using Priority for window cleaning and power washing our house for a couple of years. Jeff has always been on time and done an excellent job. He does quality work and a fair price.", 'Kevin L.'),
@@ -208,7 +226,7 @@ def footer(pre):
       </div>
       <div><h4>Services</h4><ul>{svc}</ul></div>
       <div><h4>Areas</h4><ul>{areas}<li><a href="{pre}service-areas/">All areas</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="{pre}#about">About Jeff</a></li><li><a href="{pre}#estimate">Free estimate</a></li><li><a href="{pre}#reviews">Reviews &amp; offers</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="{pre}#about">About Jeff</a></li><li><a href="{pre}#estimate">Free estimate</a></li><li><a href="{pre}#reviews">Reviews &amp; offers</a></li><li><a href="{pre}{BLOG}/">Tips &amp; articles</a></li></ul></div>
     </div>
     <p class="legal">© 2026 Priority Window Cleaning &amp; Pressure Washing · Virginia Beach, VA</p>
   </div>
@@ -288,6 +306,9 @@ def sidebar(path, pre):
         parent = PARENT.get(path, path)
         links = [(parent, NAMES[parent])] + SUBS[parent]
         title = NAMES[parent] + ' services'
+    elif path.startswith(BLOG + '/'):
+        links = [(a, article_title(a)) for a in ARTICLES if a != path][:5]
+        title = 'More tips & articles'
     elif path.startswith('service-areas'):
         links = SERVICES
         title = 'Services in ' + AREA_NAMES.get(path, 'your area').split(',')[0]
@@ -315,6 +336,8 @@ def crumbs(path, pre, name):
             parts.append(f'<a href="{pre}{PARENT[path]}/">{NAMES[PARENT[path]]}</a>')
     elif path.startswith('service-areas/'):
         parts.append(f'<a href="{pre}service-areas/">Service areas</a>')
+    elif path.startswith(BLOG + '/'):
+        parts.append(f'<a href="{pre}{BLOG}/">Tips &amp; articles</a>')
     parts.append(f'<span aria-current="page">{name}</span>')
     return '<nav class="crumbs" aria-label="Breadcrumb">' + ' <span aria-hidden="true">/</span> '.join(parts) + '</nav>'
 
@@ -351,10 +374,13 @@ def build_page(path):
             skip = False
             keep.append(b)
         rest = clean_blocks(keep)
-    name = NAMES.get(path) or AREA_NAMES.get(path) or ('Services' if path == 'services' else 'Service areas')
-    kicker = 'Service area' if path.startswith('service-areas') else 'Services'
+    if path.startswith(BLOG + '/'):
+        name = article_title(path)
+    else:
+        name = NAMES.get(path) or AREA_NAMES.get(path) or {'services': 'Services', 'service-areas': 'Service areas', BLOG: 'Tips & articles'}[path]
+    kicker = 'Service area' if path.startswith('service-areas') else ('Tips &amp; articles' if path.startswith(BLOG) else 'Services')
     img = image_for(path)
-    if path == 'service-areas':
+    if path in ('service-areas', BLOG):
         img = None
     fig = (f'<figure class="page-photo"><img src="{pre}{img}" width="450" height="300" alt="{html.escape(name)}"></figure>' if img else '')
     out = [head(path, pre, d['title'], d['desc'], d['faq'])]
@@ -381,6 +407,8 @@ def build_page(path):
         grid = card_grid(items, pre)
     elif path in SUBS:
         grid = card_grid([(p, n, first_sentence(p)) for p, n in SUBS[path]], pre)
+    elif path == BLOG:
+        grid = card_grid([(a, article_title(a), first_sentence(a)) for a in ARTICLES], pre)
     elif path == 'service-areas':
         grid = card_grid([(p, f'{n}, {s}', first_sentence(p)) for p, n, s in AREAS], pre)
     if grid:
