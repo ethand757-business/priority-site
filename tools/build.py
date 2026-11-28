@@ -178,7 +178,50 @@ STAR = '<path d="M60 44 L62.5 57.5 L76 60 L62.5 62.5 L60 76 L57.5 62.5 L44 60 L5
 WORDMARK = '<span class="logo-text">Priority<small>Window Cleaning</small><small class="sub2">&amp; Pressure Washing</small></span>'
 
 
+def nav_menus(pre):
+    """Menu groups shared by the desktop dropdowns and the phone menu."""
+    L = lambda p: f'{pre}{p}/' if p else pre
+    services = [
+        ('Window cleaning', [('services/residential-window-washing', 'Residential window washing'),
+                             ('services/commercial-window-washing', 'Commercial window washing'),
+                             ('services/waterfed-pole-window-cleaning', 'Water-fed pole cleaning')]),
+        ('Pressure washing', [('services/pressure-washing', 'Pressure washing'),
+                              ('services/pressure-washing/driveway-cleaning', 'Driveway cleaning'),
+                              ('services/pressure-washing/concrete-cleaning', 'Concrete cleaning'),
+                              ('services/pressure-washing/commercial-pressure-washing', 'Commercial pressure washing')]),
+        ('Soft washing', [('services/soft-washing', 'Soft washing'),
+                          ('services/soft-washing/house-washing', 'House washing'),
+                          ('services/soft-washing/roof-cleaning', 'Roof cleaning'),
+                          ('services/soft-washing/gutter-cleaning', 'Gutter cleaning'),
+                          ('services/soft-washing/awning-cleaning', 'Awning cleaning')]),
+        ('More', [('services/holiday-lighting', 'Holiday lighting'), ('services', 'All services')]),
+    ]
+    areas = [('Virginia', [(p, n) for p, n, st in AREAS if st == 'VA']),
+             ('North Carolina', [(p, n) for p, n, st in AREAS if st == 'NC'] + [('service-areas', 'All service areas')])]
+    about = [('', [('about-us', 'About us'), ('reviews', 'Reviews'), ('coupons', 'Coupons'), (BLOG, 'Tips & articles')])]
+    return [('Services', 'services', services, 'wide'), ('Areas', 'service-areas', areas, ''),
+            ('Our work', 'projects', None, ''), ('About', 'about-us', about, ''), ('Contact', 'contact-us', None, '')], L
+
+
 def header(pre):
+    menus, L = nav_menus(pre)
+    desk, phone = [], []
+    for i, (label, path, groups, cls) in enumerate(menus):
+        if not groups:
+            desk.append(f'<a class="nav-top" href="{L(path)}">{label}</a>')
+            phone.append(f'<a class="mnav-link" href="{L(path)}">{label}</a>')
+            continue
+        cols = ''.join(
+            f'<div class="menu-col">{"<p class=\"menu-h\">" + html.escape(h) + "</p>" if h else ""}<ul>'
+            + ''.join(f'<li><a href="{L(p)}">{html.escape(n)}</a></li>' for p, n in items) + '</ul></div>'
+            for h, items in groups)
+        mid = f'menu-{i}'
+        desk.append(f'''<div class="nav-item">
+        <a class="nav-top" href="{L(path)}">{label}</a><button class="nav-caret" type="button" aria-expanded="false" aria-controls="{mid}" aria-label="{label} menu"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="menu {cls}" id="{mid}">{cols}</div>
+      </div>''')
+        links = ''.join(f'<li><a href="{L(p)}">{html.escape(n)}</a></li>' for h, items in groups for p, n in items)
+        phone.append(f'<details class="mnav-group"><summary>{label}</summary><ul>{links}</ul></details>')
     return f'''<header class="top">
   <div class="wrap">
     <a class="logo" href="{pre}" aria-label="Priority Window Cleaning and Pressure Washing, home">
@@ -186,17 +229,22 @@ def header(pre):
       {WORDMARK}
     </a>
     <nav class="links" aria-label="Main">
-      <a href="{pre}services/">Services</a>
-      <a href="{pre}service-areas/">Areas</a>
-      <a href="{pre}projects/">Our work</a>
-      <a href="{pre}about-us/">About</a>
-      <a href="{pre}reviews/">Reviews</a>
-      <a href="{pre}contact-us/">Contact</a>
+      {"".join(desk)}
     </nav>
     <a class="top-phone num" href="tel:{PHONE_TEL}">{PHONE}</a>
     <a class="btn btn-primary btn-sm" href="{pre}#estimate">Free estimate</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
-</header>'''
+  <nav class="mnav" id="mnav" aria-label="Main" hidden>
+    <div class="wrap">
+      <a class="mnav-link" href="{pre}">Home</a>
+      {"".join(phone)}
+      <a class="btn btn-primary" href="{pre}#estimate">Get my estimate</a>
+      <a class="btn btn-line num" href="tel:{PHONE_TEL}">Call {PHONE}</a>
+    </div>
+  </nav>
+</header>
+<script src="{pre}assets/nav.js?v={NAV_V}" defer></script>'''
 
 
 def footer(pre):
@@ -241,6 +289,7 @@ def footer(pre):
 
 FAVICON = None
 import hashlib
+NAV_V = hashlib.md5(open(os.path.join(ROOT, 'assets', 'nav.js'), 'rb').read()).hexdigest()[:8]
 CSS_V = hashlib.md5(open(os.path.join(ROOT, 'assets', 'site.css'), 'rb').read()).hexdigest()[:8]
 
 
@@ -548,6 +597,9 @@ def main():
     global FAVICON
     idx = open(os.path.join(ROOT, 'index.html'), encoding='utf-8').read()
     FAVICON = re.search(r'<link rel="icon"[^>]*>', idx).group(0)
+    idx = re.sub(r'<header class="top">.*?</header>(\n<script src="assets/nav\.js[^"]*" defer></script>)?', lambda m: header(''), idx, count=1, flags=re.S)
+    idx = re.sub(r'href="assets/site\.css(\?v=\w+)?"', f'href="assets/site.css?v={CSS_V}"', idx)
+    open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(idx)
     for path in DATA:
         build_page(path)
     write_sitemap_xml()

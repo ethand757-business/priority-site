@@ -315,3 +315,46 @@ footer .logo-text small.sub2{color:#6FD0EE}
 .smap ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .smap a{font-weight:600}
 .legal a{color:inherit}
+/* ---------- header dropdowns ---------- */
+nav.links{align-items:center;gap:4px}
+nav.links .nav-top{padding:10px 8px;border-radius:8px}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-item .nav-top{padding-right:2px}
+.nav-caret{display:grid;place-items:center;width:26px;height:34px;padding:0;border:0;background:none;color:var(--muted);cursor:pointer;border-radius:6px}
+.nav-caret svg{width:12px;height:12px;transition:transform .15s}
+.nav-item.open .nav-caret svg{transform:rotate(180deg)}
+.nav-item.open .nav-top,.nav-item.open .nav-caret{color:var(--ink)}
+.menu{position:absolute;top:calc(100% + 10px);left:-12px;display:none;gap:28px;min-width:240px;padding:22px 24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 24px 50px -20px rgba(11,31,58,.35);z-index:70}
+.menu::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+.nav-item.open .menu{display:flex}
+.menu.wide{left:-24px;min-width:0;width:max-content;max-width:min(860px,calc(100vw - 32px))}
+.menu-col{min-width:170px}
+.menu-h{margin:0 0 8px;font:700 .72rem/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--link)}
+.menu ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+nav.links .menu a{display:block;padding:7px 8px;margin:0 -8px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:.93rem;white-space:nowrap}
+nav.links .menu a:hover,nav.links .menu a:focus-visible{background:var(--sky-soft);color:var(--link)}
+/* phone menu */
+.menu-btn{display:none;width:44px;height:44px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;flex-direction:column;justify-content:center;gap:5px}
+.menu-btn span{display:block;height:2px;border-radius:2px;background:var(--ink);transition:transform .2s,opacity .2s}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:1000px){.menu-btn{display:flex}}
+.mnav{border-top:1px solid var(--line);background:var(--surface);max-height:calc(100vh - 74px - env(safe-area-inset-top,0px));overflow-y:auto}
+.mnav .wrap{display:grid;gap:4px;padding-block:12px 20px}
+.mnav-link,.mnav-group summary{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line);font-weight:700;color:var(--ink);text-decoration:none;cursor:pointer;list-style:none}
+.mnav-group summary::-webkit-details-marker{display:none}
+.mnav-group summary::after{content:"+";font-size:1.3rem;color:var(--blue);line-height:1}
+.mnav-group[open] summary::after{content:"−"}
+.mnav-group ul{list-style:none;margin:0;padding:6px 0 10px 12px;display:grid}
+.mnav-group li a{display:block;padding:10px 4px;color:var(--muted);text-decoration:none;font-weight:600}
+.mnav .btn{margin-top:10px}
+@media (min-width:1001px){.mnav{display:none!important}}
+html.mnav-open{overflow:hidden}
+@media (max-width:1100px) and (min-width:1001px){.top-phone{display:none}}
+
+.menu-btn{align-items:center}
+.menu-btn span{width:20px;flex:none}
+.top .btn{white-space:nowrap}
+html.mnav-open .mbar{display:none}
+@media (max-width:520px){.top .wrap>.btn-primary{display:none}.logo-text{font-size:1.3rem}.top .wrap{gap:12px}}
