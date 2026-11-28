@@ -56,10 +56,17 @@
           <div><b>100%</b><span>satisfaction guaranteed</span></div>
         </div>
       </div>
-      <figure class="hero-photo">
-        <img src="images/jeff-about.jpg" width="1146" height="635" alt="Jeff Parks, owner of Priority Window Cleaning, outside a waterfront home">
-        <figcaption><b>Jeff Parks</b>Owner</figcaption>
-      </figure>
+      <div class="hero-photo hero-slides" id="hero-slides" aria-roledescription="carousel" aria-label="Recent jobs">
+          <figure class="slide is-on" aria-roledescription="slide" aria-label="1 of 4"><img src="images/projects/Window-Cleaning2.jpg" width="600" height="350" alt="Arched window, before and after by Priority Window Cleaning"><figcaption><b>Window cleaning</b>Arched window, before and after</figcaption></figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true"><img src="images/projects/Power-Wasing3.jpg" width="600" height="350" alt="Wood fence, before and after by Priority Window Cleaning" loading="lazy"><figcaption><b>Pressure washing</b>Wood fence, before and after</figcaption></figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true"><img src="images/projects/Window-Cleaning8.jpg" width="600" height="350" alt="Oceanfront condo, before and after by Priority Window Cleaning" loading="lazy"><figcaption><b>Window cleaning</b>Oceanfront condo, before and after</figcaption></figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true"><img src="images/projects/Power-Wasing8.jpg" width="600" height="350" alt="Brick steps, before and after by Priority Window Cleaning" loading="lazy"><figcaption><b>Pressure washing</b>Brick steps, before and after</figcaption></figure>
+        <div class="slide-ctl">
+          <button type="button" class="sbtn" data-dir="-1" aria-label="Previous photo">‹</button>
+          <div class="dots"><button type="button" class="dot is-on" aria-label="Show photo 1"></button><button type="button" class="dot" aria-label="Show photo 2"></button><button type="button" class="dot" aria-label="Show photo 3"></button><button type="button" class="dot" aria-label="Show photo 4"></button></div>
+          <button type="button" class="sbtn" data-dir="1" aria-label="Next photo">›</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -439,6 +446,25 @@
     var p=+z.slice(0,3);
     out.textContent=((p>=233&&p<=236)||p===279)?'Yes, '+z+' is in our service area.':z+' is outside our usual area. Call (757) 749-9274 and we\'ll see what we can do.';
   });
+  // hero slideshow of real jobs
+  (function(){
+    var root=$('hero-slides'); if(!root) return;
+    var slides=[].slice.call(root.querySelectorAll('.slide')), dots=[].slice.call(root.querySelectorAll('.dot')), i=0, timer=null;
+    var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function go(n){
+      i=(n+slides.length)%slides.length;
+      slides.forEach(function(s,k){var on=k===i;s.classList.toggle('is-on',on);if(on)s.removeAttribute('aria-hidden');else s.setAttribute('aria-hidden','true')});
+      dots.forEach(function(d,k){d.classList.toggle('is-on',k===i);d.setAttribute('aria-current',k===i?'true':'false')});
+    }
+    function start(){if(still||timer)return;timer=setInterval(function(){go(i+1)},4500)}
+    function stop(){clearInterval(timer);timer=null}
+    dots.forEach(function(d,k){d.addEventListener('click',function(){stop();go(k)})});
+    [].forEach.call(root.querySelectorAll('.sbtn'),function(b){b.addEventListener('click',function(){stop();go(i+(+b.getAttribute('data-dir')))})});
+    root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
+    root.addEventListener('focusin',stop);
+    document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
+    go(0);start();
+  })();
 })();
 </script>
 </body>
