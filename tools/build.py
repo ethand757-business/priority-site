@@ -327,7 +327,7 @@ def footer(pre):
       <div><h4>Areas</h4><ul>{areas}<li><a href="{pre}service-areas/">All areas</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="{pre}about-us/">About us</a></li><li><a href="{pre}projects/">Our work</a></li><li><a href="{pre}reviews/">Reviews</a></li><li><a href="{pre}coupons/">Coupons</a></li><li><a href="{pre}{BLOG}/">Tips &amp; articles</a></li><li><a href="{pre}contact-us/">Contact</a></li></ul></div>
     </div>
-    <p class="legal">© 2026 Priority Window Cleaning &amp; Pressure Washing · Virginia Beach, VA · <a href="{pre}privacy/">Privacy</a> · <a href="{pre}terms/">Terms</a> · <a href="{pre}sitemap/">Sitemap</a></p>
+    <p class="legal">© 2026 Priority Window Cleaning &amp; Pressure Washing · Virginia Beach, VA · Licensed &amp; insured · <a href="{pre}privacy/">Privacy</a> · <a href="{pre}terms/">Terms</a> · <a href="{pre}sitemap/">Sitemap</a></p>
   </div>
 </footer>
 <div class="mbar">
@@ -427,6 +427,7 @@ def sidebar(path, pre):
           <h3>See your price range in seconds</h3>
           <a class="btn btn-light" href="{pre}#estimate">Get my estimate</a>
           <a class="side-phone num" href="tel:{PHONE_TEL}">or call {PHONE}</a>
+          <p class="side-li"><svg class="ic" aria-hidden="true"><use href="#ic-tb-guarantee"/></svg>Licensed &amp; insured</p>
         </div>
         <nav class="side-box" aria-label="{html.escape(title)}"><h3>{html.escape(title)}</h3><ul>{lis}</ul></nav>
         <figure class="side-box side-review"><span class="rstars" aria-label="5 out of 5 stars">★★★★★</span><blockquote>{q}</blockquote><figcaption>{who} · Google review</figcaption></figure>

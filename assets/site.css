@@ -520,3 +520,8 @@ html.mnav-open .chat-fab{display:none}
 @media (prefers-reduced-motion:reduce){.chat-box{animation:none}.typing i{animation:none}}
 section.chat-box{padding:0}
 @media (max-width:700px){section.chat-box{padding-bottom:env(safe-area-inset-bottom,0px)}}
+.side-li{margin:2px 0 0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:.88rem;font-weight:600;color:#C9DAE8}
+.side-li .ic{width:20px;height:20px;color:#fff}
+.trust-badges{gap:10px 22px!important}
+.trust-badges li{font-size:.9rem}
+@media (max-width:1180px) and (min-width:641px){.trust-badges{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:space-between}}
