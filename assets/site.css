@@ -665,3 +665,4 @@ main:has(+ .curve-top)>section:last-child{padding-bottom:calc(clamp(64px,9vw,104
 .chunk-grid .prose>:last-child{margin-bottom:0}
 @media (max-width:860px){.chunk-grid{grid-template-columns:1fr;gap:18px}}
 .page-body.curve-top{padding-bottom:clamp(64px,9vw,104px)}
+section[aria-labelledby="tips-h"] .pcards{grid-template-columns:repeat(3,1fr)} @media (max-width:820px){section[aria-labelledby="tips-h"] .pcards{grid-template-columns:1fr}}
