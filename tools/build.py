@@ -195,7 +195,7 @@ def render_blocks(blocks, pre):
     for b in blocks:
         t = b['tag']
         if t in ('ul', 'ol'):
-            items = ''.join(f'<li>{rewrite_links(i, pre)}</li>' for i in b['items'])
+            items = ''.join(f'<li><span>{rewrite_links(i, pre)}</span></li>' for i in b['items'])
             out.append(f'<{t}>{items}</{t}>')
         else:
             out.append(f'<{t}>{rewrite_links(b["html"], pre)}</{t}>')
@@ -457,6 +457,46 @@ def areas_strip(pre):
 </section>'''
 
 
+# Section colors after the sky-blue page hero: mostly light, with the footer navy and the
+# estimate-band aqua mixed in, the same way the home page alternates them.
+BAND_CYCLE = ['white', 'sky', 'navy', 'white', 'sea', 'aqua']
+
+
+class Bands:
+    def __init__(self):
+        self.i = 0
+        self.prev = 'sky'
+
+    def next(self, light=False):
+        while True:
+            b = BAND_CYCLE[self.i % len(BAND_CYCLE)]
+            self.i += 1
+            if b != self.prev and not (light and b in ('navy', 'aqua')):
+                self.prev = b
+                return b
+
+
+def set_band(section, band):
+    return re.sub(r'band-\w+', 'band-' + band, section, count=1)
+
+
+def split_chunks(blocks):
+    """Content before the second h2 stays beside the sidebar; each later h2 starts its own band.
+    A section with only a line or two joins the one before it."""
+    starts = [i for i, b in enumerate(blocks) if b['tag'] == 'h2']
+    if len(starts) < 2:
+        return blocks, []
+    first = blocks[:starts[1]]
+    chunks = []
+    for a, b in zip(starts[1:], starts[2:] + [len(blocks)]):
+        part = blocks[a:b]
+        if chunks and len(part) < 3:
+            chunks[-1].extend(part)
+        else:
+            chunks.append(list(part))
+    return first, chunks
+
+
 def build_page(path):
     d = DATA[path]
     pre = prefix_for(path)
@@ -524,24 +564,41 @@ def build_page(path):
         grid = card_grid([(a, article_title(a), first_sentence(a)) for a in ARTICLES], pre)
     elif path == 'service-areas':
         grid = '<div class="map-wrap">' + area_map(pre) + '</div>' + card_grid([(p, f'{n}, {s}', first_sentence(p)) for p, n, s in AREAS], pre)
+    band = Bands()
     if grid:
-        out.append(f'<section class="band-white curve-top" style="padding-block:56px"><div class="wrap">{grid}</div></section>')
+        out.append(f'<section class="band-{band.next(light=True)} curve-top" style="padding-block:56px"><div class="wrap">{grid}</div></section>')
     if path in EXTRAS:
-        out.append(EXTRAS[path](pre))
+        out.append(set_band(EXTRAS[path](pre), band.next(light=True)))
         if path in ('sitemap', 'reviews', 'contact-us', 'projects'):
             rest = []
     if rest:
-        out.append(f'''<section class="page-body band-white curve-top">
+        first, chunks = split_chunks(rest)
+        out.append(f'''<section class="page-body band-{band.next(light=True)} curve-top">
   <div class="wrap page-grid">
     <article class="prose">
-          {render_blocks(rest, pre)}
+          {render_blocks(first, pre)}
     </article>
     {sidebar(path, pre)}
   </div>
 </section>''')
-    out.append(faq_html(d['faq'], pre))
+        for c in chunks:
+            out.append(f'''<section class="page-chunk band-{band.next()} curve-top">
+  <div class="wrap chunk-grid">
+    <h2>{rewrite_links(c[0]["html"], pre)}</h2>
+    <div class="prose">
+          {render_blocks(c[1:], pre)}
+    </div>
+  </div>
+</section>''')
+    faq = faq_html(d['faq'], pre)
+    if faq:
+        out.append(set_band(faq, band.next()))
     if not path.startswith('service-areas'):
-        out.append(areas_strip(pre))
+        out.append(set_band(areas_strip(pre), band.next()))
+    # the page always ends on the aqua estimate band, so the section before it never repeats aqua
+    last = max(i for i, x in enumerate(out) if 'curve-top' in x)
+    if 'band-aqua ' in out[last]:
+        out[last] = set_band(out[last], 'white')
     out.append('</main>')
     out.append(footer(pre))
     out.append('</body>\n</html>\n')

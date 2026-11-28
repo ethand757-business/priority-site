@@ -633,3 +633,35 @@ main>section:has(+ .curve-top){padding-bottom:calc(clamp(64px,9vw,104px) + 36px)
 main>.page-hero:has(+ .curve-top){padding-bottom:104px!important}
 main>.hero:has(+ .strip){padding-bottom:clamp(56px,7vw,88px)!important}
 main:has(+ .curve-top)>section:last-child{padding-bottom:calc(clamp(64px,9vw,104px) + 36px)!important}
+
+/* ===== the two blues from the bottom of the page, mixed in as section bands =====
+   navy = badge strip / footer, aqua = the "Ready for flawless windows?" band          */
+.band-navy{--bg:#0B1F3A;--surface:#13325A;--ink:#F2F8FC;--muted:#C2D4E4;--line:rgba(255,255,255,.16);
+  --link:#8FDDF3;--btn:#6FD0EE;--btn-ink:#07121F;--sky-soft:rgba(255,255,255,.08);background:#0B1F3A;color:var(--ink)}
+.band-navy h2,.band-navy h3,.band-navy .prose p strong{color:var(--ink)}
+.band-navy .kicker{color:#8FDDF3}
+.band-navy .kicker::before{background:#6FD0EE}
+.band-navy .prose ul li::before{background:#6FD0EE}
+.band-navy .prose ol li::before{background:#6FD0EE;color:#0B1F3A}
+.band-navy .why h3,.band-navy .why p{color:inherit}
+.band-navy .why p{color:var(--muted)}
+.band-navy .faq details,.band-navy .area-links a{background:#13325A;border-color:rgba(255,255,255,.16);color:#F2F8FC}
+.band-navy .btn-light{background:#6FD0EE;color:#07121F}
+/* aqua used mid-page: same gradient, navy text, white cards */
+.band-aqua{--ink:#0B1F3A;--muted:#0B1F3A;--link:#0B1F3A;--line:rgba(11,31,58,.18)}
+.band-aqua .kicker{color:#0B1F3A}
+.band-aqua .kicker::before{background:#0B1F3A}
+.band-aqua a{text-decoration-color:rgba(11,31,58,.5)}
+.band-aqua .prose a{font-weight:700;text-decoration:underline}
+.band-aqua .prose ul li::before{background:#0B1F3A}
+.band-aqua .prose p strong{color:#0B1F3A}
+.band-aqua .steps4 li,.band-aqua .faq details,.band-aqua .area-links a{background:#fff;border-color:transparent;box-shadow:0 14px 30px -22px rgba(11,31,58,.6)}
+.band-aqua .steps4 li p,.band-aqua .faq details p{color:#4A5D72!important;opacity:1}
+/* later sections of a service / area / article page: heading on the left, text on the right */
+.page-chunk{padding-block:clamp(64px,9vw,104px)}
+.chunk-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:56px;align-items:start}
+.chunk-grid>h2{font-size:clamp(1.55rem,2.8vw,2.1rem);margin:0}
+.chunk-grid .prose{max-width:70ch}
+.chunk-grid .prose>:last-child{margin-bottom:0}
+@media (max-width:860px){.chunk-grid{grid-template-columns:1fr;gap:18px}}
+.page-body.curve-top{padding-bottom:clamp(64px,9vw,104px)}
