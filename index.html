@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,500..900&family=Public+Sans:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=40d247f5">
+<link rel="stylesheet" href="assets/site.css?v=18865aeb">
 <link rel="canonical" href="https://windowcleaningva.com/">
 </head>
 <body>
@@ -335,9 +335,9 @@
 <script src="assets/chat.js?v=b984041a" data-base="" defer></script>
 
 <main id="top">
-  <a class="season" id="season" href="services/holiday-lighting/">
-    <span class="wrap season-in"><svg class="ic" aria-hidden="true"><use href="#ic-lights"/></svg><span id="season-t">Holiday lighting installs are booking now. Reserve your spot.</span><span class="season-go" aria-hidden="true">→</span></span>
-  </a>
+  <div class="season" id="season" role="region" aria-label="Announcements">
+    <div class="ticker"><div class="ticker-track"><div class="ticker-group"><a class="tk season-item" href="services/holiday-lighting/"><svg class="ic" aria-hidden="true"><use href="#ic-lights"/></svg><span class="tk-t">Holiday lighting installs are booking now. Reserve your spot.</span></a><span class="tk-dot" aria-hidden="true">◆</span><a class="tk " href="coupons/"><svg class="ic" aria-hidden="true"><use href="#ic-tb-estimate"/></svg><span class="tk-t">New customers: $25 off any one service</span></a><span class="tk-dot" aria-hidden="true">◆</span><a class="tk " href="about-us/"><svg class="ic" aria-hidden="true"><use href="#ic-tb-guarantee"/></svg><span class="tk-t">Licensed &amp; insured · 20+ years of experience</span></a><span class="tk-dot" aria-hidden="true">◆</span><a class="tk " href="reviews/"><svg class="ic" aria-hidden="true"><use href="#ic-tb-check"/></svg><span class="tk-t">Every Google review is 5 stars</span></a><span class="tk-dot" aria-hidden="true">◆</span></div><div class="ticker-group" aria-hidden="true"><a class="tk season-item" href="services/holiday-lighting/" tabindex="-1"><svg class="ic" aria-hidden="true"><use href="#ic-lights"/></svg><span class="tk-t">Holiday lighting installs are booking now. Reserve your spot.</span></a><span class="tk-dot" aria-hidden="true">◆</span><a class="tk " href="coupons/" tabindex="-1"><svg class="ic" aria-hidden="true"><use href="#ic-tb-estimate"/></svg><span class="tk-t">New customers: $25 off any one service</span></a><span class="tk-dot" aria-hidden="true">◆</span><a class="tk " href="about-us/" tabindex="-1"><svg class="ic" aria-hidden="true"><use href="#ic-tb-guarantee"/></svg><span class="tk-t">Licensed &amp; insured · 20+ years of experience</span></a><span class="tk-dot" aria-hidden="true">◆</span><a class="tk " href="reviews/" tabindex="-1"><svg class="ic" aria-hidden="true"><use href="#ic-tb-check"/></svg><span class="tk-t">Every Google review is 5 stars</span></a><span class="tk-dot" aria-hidden="true">◆</span></div></div></div>
+  </div>
   <section class="hero" aria-labelledby="h1">
     <div class="wrap">
       <div>
@@ -771,16 +771,16 @@
     document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
     go(0);start();
   })();
-  // seasonal banner: message changes with the time of year
+  // seasonal banner: first ticker message changes with the time of year
   (function(){
-    var el=$('season'); if(!el) return;
+    var items=document.querySelectorAll('.season-item'); if(!items.length) return;
     var m=new Date().getMonth(), S=[
       [[0,1],'window','New year, clear view. Book a winter window cleaning.','services/residential-window-washing/'],
       [[2,3,4],'house','Pollen season is here. Book a spring window and house wash.','services/soft-washing/house-washing/'],
       [[5,6,7],'drive','Summer guests coming? Get driveways, patios and decks pressure washed.','services/pressure-washing/'],
       [[8,9],'gutter','Fall is gutter season. Clear them before the storms.','services/soft-washing/gutter-cleaning/'],
       [[10,11],'lights','Holiday lighting installs are booking now. Reserve your spot.','services/holiday-lighting/']];
-    for(var k=0;k<S.length;k++){if(S[k][0].indexOf(m)>-1){el.href=S[k][3];$('season-t').textContent=S[k][2];el.querySelector('use').setAttribute('href','#ic-'+S[k][1]);break}}
+    for(var k=0;k<S.length;k++){if(S[k][0].indexOf(m)>-1){[].forEach.call(items,function(el){el.href=S[k][3];el.querySelector('.tk-t').textContent=S[k][2];el.querySelector('use').setAttribute('href','#ic-'+S[k][1])});break}}
   })();
 })();
 </script>
