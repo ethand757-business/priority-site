@@ -549,3 +549,9 @@ section.chat-box{padding:0}
   .ticker-group[aria-hidden]{display:none}
   .ticker-group{flex-wrap:wrap;justify-content:center;width:100%;padding:4px 16px}
 }
+/* Ask button: its own color so it doesn't blend with Call/Text */
+:root{--ask-bg:#6FD0EE;--ask-ink:#0B1F3A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ask-bg:#FFFFFF;--ask-ink:#0B1F3A}}
+:root[data-theme="dark"]{--ask-bg:#FFFFFF;--ask-ink:#0B1F3A}
+.mbar .mbar-ask{background:var(--ask-bg);border-color:var(--ask-bg);color:var(--ask-ink);box-shadow:0 6px 16px -8px rgba(30,155,215,.8)}
+.mbar .mbar-ask svg path{stroke-width:2.4}
