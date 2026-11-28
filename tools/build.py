@@ -114,6 +114,19 @@ ICON = {
     'services/soft-washing/gutter-cleaning': 'gutter', 'services/soft-washing/awning-cleaning': 'gutter',
     'services/holiday-lighting': 'lights',
 }
+LANDMARK = {p: 'lm-' + p.split('/')[1].rsplit('-', 3)[0] for p, n, st in AREAS}
+AREA_MAP = open(os.path.join(ROOT, 'assets', 'area-map.txt'), encoding='utf-8').read()
+
+
+def area_map(pre):
+    return AREA_MAP.replace('__PRE__', pre)
+
+
+def landmark(path, cls='lm'):
+    lm = LANDMARK.get(path)
+    return f'<svg class="{cls}" aria-hidden="true"><use href="#ic-{lm}"/></svg>' if lm else ''
+
+
 ICONS_SPRITE = open(os.path.join(ROOT, 'assets', 'icons.txt'), encoding='utf-8').read()
 
 
@@ -365,6 +378,8 @@ def card_grid(items, pre):
     for p, name, sub in items:
         img = image_for(p) if p in DATA else None
         im = f'<img src="{pre}{img}" width="450" height="300" alt="" loading="lazy">' if img else ''
+        if p in LANDMARK:
+            im = f'<span class="lm-panel lm-card">{landmark(p)}</span>'
         cards.append(f'<a class="pcard" href="{pre}{p}/">{im}<span class="pcard-body"><b>{name}</b><span>{html.escape(sub)}</span></span></a>')
     return '<div class="pcards">' + ''.join(cards) + '</div>'
 
@@ -426,7 +441,7 @@ def crumbs(path, pre, name):
 
 
 def areas_strip(pre):
-    links = ''.join(f'<a href="{pre}{p}/">{n}<i>{s}</i></a>' for p, n, s in AREAS)
+    links = ''.join(f'<a href="{pre}{p}/">{landmark(p, "lm lm-pill")}{n}<i>{s}</i></a>' for p, n, s in AREAS)
     return f'''<section class="est-band" aria-labelledby="ar-h" style="padding-block:56px">
   <div class="wrap">
     <div class="head" style="margin-bottom:24px"><p class="kicker">Service area</p><h2 id="ar-h">Serving coastal Virginia and North Carolina</h2></div>
@@ -471,6 +486,8 @@ def build_page(path):
     if path == 'about-us':
         img = 'images/jeff-about.jpg'
     fig = (f'<figure class="page-photo"><img src="{pre}{img}" width="450" height="300" alt="{html.escape(name)}"></figure>' if img else '')
+    if path in LANDMARK:
+        fig = f'<figure class="page-photo lm-panel">{landmark(path)}<figcaption>{html.escape(name)}</figcaption></figure>'
     out = [head(path, pre, d['title'], d['desc'], d['faq'])]
     out.append(f'''<section class="page-hero">
   <div class="wrap">
@@ -499,7 +516,7 @@ def build_page(path):
     elif path == BLOG:
         grid = card_grid([(a, article_title(a), first_sentence(a)) for a in ARTICLES], pre)
     elif path == 'service-areas':
-        grid = card_grid([(p, f'{n}, {s}', first_sentence(p)) for p, n, s in AREAS], pre)
+        grid = '<div class="map-wrap">' + area_map(pre) + '</div>' + card_grid([(p, f'{n}, {s}', first_sentence(p)) for p, n, s in AREAS], pre)
     if grid:
         out.append(f'<section style="padding-block:8px 56px"><div class="wrap">{grid}</div></section>')
     if path in EXTRAS:
@@ -582,12 +599,12 @@ def extra_projects(pre):
 def extra_contact(pre):
     return f'''<section style="padding-block:8px 72px"><div class="wrap">
   <div class="contact-grid">
-    <a class="ccard" href="tel:{PHONE_TEL}"><span class="lbl">Call</span><b class="num">{PHONE}</b><span>Talk to Jeff directly.</span></a>
-    <a class="ccard" href="sms:{PHONE_TEL}"><span class="lbl">Text</span><b class="num">{PHONE}</b><span>Send a photo of the job for a faster quote.</span></a>
-    <a class="ccard" href="{pre}#estimate"><span class="lbl">Online</span><b>Free estimate</b><span>See a price range and send it to Jeff in a minute.</span></a>
-    <a class="ccard" href="{GMAPS}" target="_blank" rel="noopener"><span class="lbl">Find us</span><b>Virginia Beach, VA</b><span>Open on Google Maps and see our reviews.</span></a>
-    <a class="ccard" href="{FB}" target="_blank" rel="noopener"><span class="lbl">Follow</span><b>Facebook</b><span>Photos of recent jobs and seasonal offers.</span></a>
-    <a class="ccard" href="{pre}service-areas/"><span class="lbl">Service area</span><b>10 towns in VA &amp; NC</b><span>Virginia Beach to Williamsburg and the Outer Banks.</span></a>
+    <a class="ccard" href="tel:{PHONE_TEL}"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-phone"/></svg><span class="lbl">Call</span><b class="num">{PHONE}</b><span>Talk to Jeff directly.</span></a>
+    <a class="ccard" href="sms:{PHONE_TEL}"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-text"/></svg><span class="lbl">Text</span><b class="num">{PHONE}</b><span>Send a photo of the job for a faster quote.</span></a>
+    <a class="ccard" href="{pre}#estimate"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-estimate"/></svg><span class="lbl">Online</span><b>Free estimate</b><span>See a price range and send it to Jeff in a minute.</span></a>
+    <a class="ccard" href="{GMAPS}" target="_blank" rel="noopener"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-map"/></svg><span class="lbl">Find us</span><b>Virginia Beach, VA</b><span>Open on Google Maps and see our reviews.</span></a>
+    <a class="ccard" href="{FB}" target="_blank" rel="noopener"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-social"/></svg><span class="lbl">Follow</span><b>Facebook</b><span>Photos of recent jobs and seasonal offers.</span></a>
+    <a class="ccard" href="{pre}service-areas/"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-area"/></svg><span class="lbl">Service area</span><b>10 towns in VA &amp; NC</b><span>Virginia Beach to Williamsburg and the Outer Banks.</span></a>
   </div>
   <div class="map"><iframe title="Priority Window Cleaning on Google Maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.4962390527767!2d-76.0048718!3d36.758661200000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bac170a4c8d639%3A0x80f6850c842eaa15!2sPriority%20Window%20Cleaning!5e0!3m2!1sen!2sus!4v1772738932569!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 </div></section>'''
@@ -619,6 +636,26 @@ def extra_sitemap(pre):
 EXTRAS = {'reviews': extra_reviews, 'projects': extra_projects, 'contact-us': extra_contact, 'coupons': extra_coupons, 'sitemap': extra_sitemap}
 
 
+# Web path the site is served from. '/priority-site/' on GitHub Pages; change to '/' once it is on windowcleaningva.com.
+SITE_BASE = '/priority-site/'
+
+
+def write_404():
+    pre = SITE_BASE
+    body = f'''<section class="page-hero" style="padding-block:72px">
+  <div class="wrap nf">
+    <svg class="nf-ic" aria-hidden="true"><use href="#ic-window"/></svg>
+    <p class="kicker">Page not found</p>
+    <h1>We wiped this page clean.</h1>
+    <p class="lede">The page you were looking for isn't here anymore. These will get you where you're going:</p>
+    <div class="ctas"><a class="btn btn-primary" href="{pre}">Go to the homepage</a><a class="btn btn-line" href="{pre}#estimate">Get my estimate</a><a class="btn btn-line" href="{pre}services/">Services</a><a class="btn btn-line" href="{pre}contact-us/">Contact</a></div>
+  </div>
+</section>'''
+    page = head('404', pre, 'Page not found | Priority Window Cleaning', 'This page could not be found.', []) + body + '</main>\n' + footer(pre) + '\n</body>\n</html>\n'
+    page = page.replace(f'<link rel="canonical" href="{DOMAIN}/404">\n', '<meta name="robots" content="noindex">\n')
+    open(os.path.join(ROOT, '404.html'), 'w', encoding='utf-8').write(page)
+
+
 def write_sitemap_xml():
     urls = [''] + [p + '/' for p in DATA]
     body = ''.join(f'<url><loc>{DOMAIN}/{u}</loc></url>' for u in urls)
@@ -637,6 +674,7 @@ def main():
     for path in DATA:
         build_page(path)
     write_sitemap_xml()
+    write_404()
     print('built', len(DATA), 'pages')
 
 
