@@ -333,6 +333,7 @@ def footer(pre):
 <div class="mbar">
   <a class="btn btn-line" href="tel:{PHONE_TEL}">Call</a>
   <a class="btn btn-line" href="sms:{PHONE_TEL}">Text</a>
+  <button class="btn btn-line mbar-ask" type="button" data-chat-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Ask</button>
   <a class="btn btn-primary" href="{pre}#estimate">Estimate</a>
 </div>'''
 

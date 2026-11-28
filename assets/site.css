@@ -525,3 +525,9 @@ section.chat-box{padding:0}
 .trust-badges{gap:10px 22px!important}
 .trust-badges li{font-size:.9rem}
 @media (max-width:1180px) and (min-width:641px){.trust-badges{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:space-between}}
+/* "Ask" lives in the phone bottom bar, so the floating bubble is desktop-only */
+.mbar{grid-template-columns:1fr 1fr 1fr 1.25fr!important;gap:6px!important}
+.mbar .btn{padding:13px 4px!important}
+.mbar-ask{gap:6px;font:700 .93rem var(--body);cursor:pointer}
+.mbar-ask svg{width:18px;height:18px;flex:none}
+@media (max-width:700px){.chat-fab{display:none!important}}

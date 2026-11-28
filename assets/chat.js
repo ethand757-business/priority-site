@@ -109,9 +109,10 @@
     if (v) {
       if (!started) { started = true; add('bot', 'Hi! I can answer common questions about Priority Window Cleaning right away. What can I help with?'); renderChips(); }
       setTimeout(function () { input.focus({ preventScroll: true }); }, 50);
-    } else fab.focus({ preventScroll: true });
+    } else { var ask = document.querySelector('.mbar-ask'); (ask && ask.offsetParent ? ask : fab).focus({ preventScroll: true }); }
   }
   fab.addEventListener('click', function () { open(box.hidden); });
+  [].forEach.call(document.querySelectorAll('[data-chat-open]'), function (b) { b.addEventListener('click', function () { open(true); }); });
   box.querySelector('.chat-x').addEventListener('click', function () { open(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) open(false); });
   form.addEventListener('submit', function (e) {
