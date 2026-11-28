@@ -571,3 +571,4 @@ section.chat-box{padding:0}
   html.chat-open .chat-fab,html.mnav-open .chat-fab{display:none!important}
   footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
 }
+.tk-phone b{color:var(--link);font-weight:800}
