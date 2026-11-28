@@ -357,4 +357,4 @@ html.mnav-open{overflow:hidden}
 .menu-btn span{width:20px;flex:none}
 .top .btn{white-space:nowrap}
 html.mnav-open .mbar{display:none}
-@media (max-width:520px){.top .wrap>.btn-primary{display:none}.logo-text{font-size:1.3rem}.top .wrap{gap:12px}}
+@media (max-width:520px){.top>.wrap>.btn-primary{display:none}.logo-text{font-size:1.3rem}.top .wrap{gap:12px}}
