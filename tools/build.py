@@ -551,8 +551,8 @@ REVIEW_CARDS = [
     ("Troy W.", "Reasonably priced. Power washed my two story house quickly and quality. Super friendly.", "Pressure washing"),
 ]
 # Strongest results first, alternating window and pressure-washing jobs.
-PROJECT_ORDER = ['Window-Cleaning2.jpg', 'Power-Wasing3.jpg', 'Window-Cleaning8.jpg', 'Power-Wasing8.jpg',
-                 'Window-Cleaning7.jpg', 'Power-Wasing5.jpg', 'Window-Cleaning45.jpg', 'Power-Wasing4.jpg',
+PROJECT_ORDER = ['Window-Cleaning2-hd.jpg', 'Power-Wasing3-hd.jpg', 'Window-Cleaning8-hd.jpg', 'Power-Wasing8-hd.jpg',
+                 'Window-Cleaning7-hd.jpg', 'Power-Wasing5-hd.jpg', 'Window-Cleaning45.jpg', 'Power-Wasing4.jpg',
                  'Window-Cleaning6.jpg', 'Power-Wasing6.jpg', 'Window-Cleaning1.jpg', 'Power-Wasing9.jpg',
                  'Window-Cleaning3.jpg', 'Power-Wasing7.jpg', 'Window-Cleaning4.jpg', 'Power-Wasing1.jpg']
 _have = set(os.listdir(os.path.join(ROOT, 'images', 'projects')))
