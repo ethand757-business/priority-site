@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,500..900&family=Public+Sans:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=ffbb3763">
 <link rel="canonical" href="https://windowcleaningva.com/">
 </head>
 <body>
@@ -455,19 +455,20 @@
   (function(){
     var root=$('hero-slides'); if(!root) return;
     var slides=[].slice.call(root.querySelectorAll('.slide')), dots=[].slice.call(root.querySelectorAll('.dot')), i=0, timer=null;
-    var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Auto-advance every 5 seconds. A tap or click on the controls pauses it briefly, then it carries on.
+    // Hovering with a mouse pauses it; touch screens never get stuck paused.
     function go(n){
       i=(n+slides.length)%slides.length;
       slides.forEach(function(s,k){var on=k===i;s.classList.toggle('is-on',on);if(on)s.removeAttribute('aria-hidden');else s.setAttribute('aria-hidden','true')});
       dots.forEach(function(d,k){d.classList.toggle('is-on',k===i);d.setAttribute('aria-current',k===i?'true':'false')});
       var cap=$('slide-cap'); if(cap){cap.children[0].textContent=slides[i].getAttribute('data-title');cap.children[1].textContent=slides[i].getAttribute('data-desc');}
     }
-    function start(){if(still||timer)return;timer=setInterval(function(){go(i+1)},4500)}
-    function stop(){clearInterval(timer);timer=null}
-    dots.forEach(function(d,k){d.addEventListener('click',function(){stop();go(k)})});
-    [].forEach.call(root.querySelectorAll('.sbtn'),function(b){b.addEventListener('click',function(){stop();go(i+(+b.getAttribute('data-dir')))})});
-    root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
-    root.addEventListener('focusin',stop);
+    function start(delay){stop();timer=setTimeout(function tick(){go(i+1);timer=setTimeout(tick,5000)},delay||5000)}
+    function stop(){clearTimeout(timer);timer=null}
+    dots.forEach(function(d,k){d.addEventListener('click',function(){go(k);start(9000)})});
+    [].forEach.call(root.querySelectorAll('.sbtn'),function(b){b.addEventListener('click',function(){go(i+(+b.getAttribute('data-dir')));start(9000)})});
+    root.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')stop()});
+    root.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')start()});
     document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
     go(0);start();
   })();

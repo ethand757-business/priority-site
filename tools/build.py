@@ -240,6 +240,8 @@ def footer(pre):
 
 
 FAVICON = None
+import hashlib
+CSS_V = hashlib.md5(open(os.path.join(ROOT, 'assets', 'site.css'), 'rb').read()).hexdigest()[:8]
 
 
 def head(path, pre, title, desc, faq):
@@ -270,7 +272,7 @@ def head(path, pre, title, desc, faq):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,500..900&family=Public+Sans:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="{pre}assets/site.css">
+<link rel="stylesheet" href="{pre}assets/site.css?v={CSS_V}">
 {ld_html}
 </head>
 <body>
