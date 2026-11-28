@@ -29,7 +29,7 @@
     { k: ['house wash', 'wash my house', 'mildew', 'algae', 'green', 'mold'], a: 'Our soft wash house washing removes algae, mildew and grime gently, so siding, trim and seals stay protected.', l: [['House washing', 'services/soft-washing/house-washing/']] },
     { k: ['book', 'schedule', 'appointment', 'available', 'availability', 'soon', 'this week', 'tomorrow'], a: 'The fastest way to book is to call or text Jeff. You can also use the online estimate and send it to him in one tap.', l: [['Get my estimate', '#estimate']] , jeff: true },
     { k: ['photo', 'picture', 'before and after', 'before & after', 'work', 'example', 'portfolio'], a: 'Here are real before-and-after photos from Jeff’s jobs.', l: [['Our work', 'projects/']] },
-    { k: ['review', 'rating', 'stars', 'google'], a: 'Every review on Google is 5 stars. Customers mention Jeff being on time, thorough and fairly priced.', l: [['Read reviews', 'reviews/']] },
+    { k: ['review', 'rating', 'stars', 'google'], a: 'We have countless 5-star reviews on Google. Customers mention Jeff being on time, thorough and fairly priced.', l: [['Read reviews', 'reviews/']] },
     { k: ['who', 'owner', 'jeff', 'experience', 'how long', 'years'], a: 'Priority Window Cleaning is owner-operated by Jeff Parks, with more than 20 years of experience and a focus on high-end residential homes. The business is fully licensed and insured.', l: [['About us', 'about-us/']] },
     { k: ['phone', 'call', 'number', 'contact', 'text', 'reach'], a: 'Call or text Jeff at ' + PHONE + '.', jeff: true }
   ];

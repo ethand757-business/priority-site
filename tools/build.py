@@ -589,7 +589,7 @@ PROJECTS = [f for f in PROJECT_ORDER if f in _have] + sorted(_have - set(PROJECT
 def extra_reviews(pre):
     cards = '\n'.join(f'''<figure class="review"><span class="rstars" aria-label="5 out of 5 stars">★★★★★</span><blockquote>{t}</blockquote><figcaption><b>{n}</b><span>{sv}</span></figcaption></figure>''' for n, t, sv in REVIEW_CARDS)
     return f'''<section style="padding-block:8px 72px"><div class="wrap">
-  <div class="rv-head"><a class="gscore" href="{GMAPS}" target="_blank" rel="noopener" aria-label="Rated 5.0 out of 5 on Google"><b>5.0</b><span class="rstars" aria-hidden="true">★★★★★</span><span>Every review on Google is 5 stars</span></a>
+  <div class="rv-head"><a class="gscore" href="{GMAPS}" target="_blank" rel="noopener" aria-label="Rated 5.0 out of 5 on Google"><b>5.0</b><span class="rstars" aria-hidden="true">★★★★★</span><span>Countless 5-star reviews on Google</span></a>
   <div class="row" style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-primary btn-sm" href="{GMAPS}" target="_blank" rel="noopener">All Google reviews</a><a class="btn btn-line btn-sm" href="{GMAPS}" target="_blank" rel="noopener">Leave a review</a></div></div>
   <div class="reviews">{cards}</div>
 </div></section>'''
