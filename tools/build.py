@@ -131,7 +131,7 @@ ICONS_SPRITE = open(os.path.join(ROOT, 'assets', 'icons.txt'), encoding='utf-8')
 
 
 def icon(path, cls='ic'):
-    i = ICON.get(path)
+    i = ICON.get(path) or (LANDMARK.get(path) if 'LANDMARK' in globals() else None)
     return f'<svg class="{cls}" aria-hidden="true"><use href="#ic-{i}"/></svg>' if i else ''
 
 
@@ -264,7 +264,7 @@ def header(pre):
         <a class="nav-top" href="{L(path)}">{label}</a><button class="nav-caret" type="button" aria-expanded="false" aria-controls="{mid}" aria-label="{label} menu"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="menu {cls}" id="{mid}">{cols}</div>
       </div>''')
-        links = ''.join(f'<li><a href="{L(p)}">{html.escape(n)}</a></li>' for h, items in groups for p, n in items)
+        links = ''.join(f'<li><a href="{L(p)}">{icon(p)}{html.escape(n)}</a></li>' for h, items in groups for p, n in items)
         phone.append(f'<details class="mnav-group"><summary>{label}</summary><ul>{links}</ul></details>')
     return f'''<header class="top">
   <div class="wrap">
