@@ -432,3 +432,44 @@ section .wrap>.map-wrap:first-child{margin-bottom:28px}
 .menu .ic:has(use[href^="#ic-lm-"]) *,.lm-pill *{stroke-width:1.9px}
 .mnav-group li a{display:flex;align-items:center;gap:10px}
 .mnav-group .ic{width:24px;height:24px}
+/* ---------- phone side panel (replaces drop-down sheet) ---------- */
+.mnav{position:fixed;top:0;right:0;bottom:0;z-index:90;width:min(86vw,380px);max-height:none;display:flex;flex-direction:column;
+  border-top:0;border-left:1px solid var(--line);background:var(--surface);box-shadow:-24px 0 60px -20px rgba(11,31,58,.45);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px);
+  transform:translateX(105%);visibility:hidden;overflow:hidden;
+  transition:transform .42s cubic-bezier(.32,.72,0,1),visibility 0s linear .42s;will-change:transform}
+html.mnav-open .mnav{transform:translateX(0);visibility:visible;transition:transform .42s cubic-bezier(.32,.72,0,1),visibility 0s}
+.mnav.dragging{transition:none!important}
+.mnav-scrim{position:fixed;inset:0;z-index:85;background:rgba(6,17,31,.45);opacity:0;pointer-events:none;transition:opacity .35s ease;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+html.mnav-open .mnav-scrim{opacity:1;pointer-events:auto}
+@media (min-width:1001px){.mnav,.mnav-scrim{display:none!important}}
+.mnav-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px 14px 20px;border-bottom:1px solid var(--line)}
+.mnav-head .logo{margin:0}
+.mnav-head .logo-mark{width:36px;height:36px}
+.mnav-head .logo-text{font-size:1.15rem}
+.mnav-close{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer;flex:none}
+.mnav-close svg{width:20px;height:20px}
+.mnav-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:8px 20px 24px;display:grid;align-content:start;gap:0}
+.mnav-sum{display:flex;justify-content:space-between;align-items:center;width:100%;padding:16px 4px;border:0;border-bottom:1px solid var(--line);background:none;font:700 1rem var(--body);color:var(--ink);cursor:pointer;text-align:left}
+.mnav-pm{position:relative;width:14px;height:14px;flex:none}
+.mnav-pm::before,.mnav-pm::after{content:"";position:absolute;left:0;top:6px;width:14px;height:2px;border-radius:2px;background:var(--blue);transition:transform .3s cubic-bezier(.32,.72,0,1)}
+.mnav-pm::after{transform:rotate(90deg)}
+.mnav-group.open .mnav-pm::after{transform:rotate(0)}
+.mnav-sub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.32,.72,0,1)}
+.mnav-group.open .mnav-sub{grid-template-rows:1fr}
+.mnav-sub>ul{overflow:hidden;min-height:0;list-style:none;margin:0;padding:0 0 0 8px;opacity:0;transform:translateY(-4px);transition:opacity .25s ease,transform .3s ease}
+.mnav-group.open .mnav-sub>ul{opacity:1;transform:none;padding-block:6px 10px}
+.mnav-sub li a{display:flex;align-items:center;gap:12px;padding:11px 4px;color:var(--muted);text-decoration:none;font-weight:600;border-radius:8px}
+.mnav-sub li a:active{background:var(--sky-soft)}
+.mnav-sub .ic{width:24px;height:24px}
+.mnav-body .btn{margin-top:14px}
+.mnav-body .btn+.btn{margin-top:10px}
+html.mnav-open .mnav .mnav-body>*{animation:mnavIn .45s cubic-bezier(.32,.72,0,1) both}
+html.mnav-open .mnav .mnav-body>*:nth-child(2){animation-delay:.03s}
+html.mnav-open .mnav .mnav-body>*:nth-child(3){animation-delay:.06s}
+html.mnav-open .mnav .mnav-body>*:nth-child(4){animation-delay:.09s}
+html.mnav-open .mnav .mnav-body>*:nth-child(5){animation-delay:.12s}
+html.mnav-open .mnav .mnav-body>*:nth-child(n+6){animation-delay:.15s}
+@keyframes mnavIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mnav,.mnav-scrim,.mnav-sub,.mnav-sub>ul{transition:none!important}html.mnav-open .mnav .mnav-body>*{animation:none}}
+html.mnav-open .menu-btn span:nth-child(1),html.mnav-open .menu-btn span:nth-child(2),html.mnav-open .menu-btn span:nth-child(3){transform:none;opacity:1}

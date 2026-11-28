@@ -265,7 +265,7 @@ def header(pre):
         <div class="menu {cls}" id="{mid}">{cols}</div>
       </div>''')
         links = ''.join(f'<li><a href="{L(p)}">{icon(p)}{html.escape(n)}</a></li>' for h, items in groups for p, n in items)
-        phone.append(f'<details class="mnav-group"><summary>{label}</summary><ul>{links}</ul></details>')
+        phone.append(f'<div class="mnav-group"><button class="mnav-sum" type="button" aria-expanded="false" aria-controls="m{mid}">{label}<span class="mnav-pm" aria-hidden="true"></span></button><div class="mnav-sub" id="m{mid}"><ul>{links}</ul></div></div>')
     return f'''<header class="top">
   <div class="wrap">
     <a class="logo" href="{pre}" aria-label="Priority Window Cleaning and Pressure Washing, home">
@@ -279,8 +279,13 @@ def header(pre):
     <a class="btn btn-primary btn-sm" href="{pre}#estimate">Free estimate</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
-  <nav class="mnav" id="mnav" aria-label="Main" hidden>
-    <div class="wrap">
+  <div class="mnav-scrim" aria-hidden="true"></div>
+  <nav class="mnav" id="mnav" aria-label="Main" inert>
+    <div class="mnav-head">
+      <a class="logo" href="{pre}" aria-label="Home">{LOGO.format(d="var(--logo-diamond)", star=STAR)}{WORDMARK}</a>
+      <button class="mnav-close" type="button" aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="mnav-body">
       <a class="mnav-link" href="{pre}">Home</a>
       {"".join(phone)}
       <a class="btn btn-primary" href="{pre}#estimate">Get my estimate</a>
