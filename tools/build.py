@@ -293,7 +293,8 @@ def header(pre):
     </div>
   </nav>
 </header>
-<script src="{pre}assets/nav.js?v={NAV_V}" defer></script>'''
+<script src="{pre}assets/nav.js?v={NAV_V}" defer></script>
+<script src="{pre}assets/chat.js?v={CHAT_V}" data-base="{pre}" defer></script>'''
 
 
 def footer(pre):
@@ -338,6 +339,7 @@ def footer(pre):
 
 FAVICON = None
 import hashlib
+CHAT_V = hashlib.md5(open(os.path.join(ROOT, 'assets', 'chat.js'), 'rb').read()).hexdigest()[:8]
 NAV_V = hashlib.md5(open(os.path.join(ROOT, 'assets', 'nav.js'), 'rb').read()).hexdigest()[:8]
 CSS_V = hashlib.md5(open(os.path.join(ROOT, 'assets', 'site.css'), 'rb').read()).hexdigest()[:8]
 
@@ -671,7 +673,7 @@ def main():
     global FAVICON
     idx = open(os.path.join(ROOT, 'index.html'), encoding='utf-8').read()
     FAVICON = re.search(r'<link rel="icon"[^>]*>', idx).group(0)
-    idx = re.sub(r'<header class="top">.*?</header>(\n<script src="assets/nav\.js[^"]*" defer></script>)?', lambda m: header(''), idx, count=1, flags=re.S)
+    idx = re.sub(r'<header class="top">.*?</header>(\n<script src="assets/nav\.js[^"]*" defer></script>)?(\n<script src="assets/chat\.js[^"]*"[^>]*></script>)?', lambda m: header(''), idx, count=1, flags=re.S)
     idx = re.sub(r'<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ic-.*?</defs></svg>\n', '', idx, flags=re.S)
     idx = idx.replace('<body>\n', '<body>\n' + ICONS_SPRITE, 1)
     idx = re.sub(r'href="assets/site\.css(\?v=\w+)?"', f'href="assets/site.css?v={CSS_V}"', idx)
