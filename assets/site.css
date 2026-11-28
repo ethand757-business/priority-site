@@ -572,3 +572,42 @@ section.chat-box{padding:0}
   footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
 }
 .tk-phone b{color:var(--link);font-weight:800}
+
+/* ===================== COLOR BANDS =====================
+   Palette from the logo, so sections alternate instead of one long pale strip:
+   white · dune (sand) · sea glass (pale aqua) · deep sea · navy · aqua               */
+:root{
+  --b-white:#FFFFFF; --b-sand:#F5EDE0; --b-sand-line:#E6D8C2; --b-sea:#E3F4F7; --b-sea-line:#C6E3EA;
+  --b-deep:#0F3157; --b-deep-card:#15426F;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --b-white:#07121F; --b-sand:#0F1D2E; --b-sand-line:#22364D; --b-sea:#0A2333; --b-sea-line:#1C3B4F;
+  --b-deep:#0C2B4C; --b-deep-card:#123A63}}
+:root[data-theme="dark"]{
+  --b-white:#07121F; --b-sand:#0F1D2E; --b-sand-line:#22364D; --b-sea:#0A2333; --b-sea-line:#1C3B4F;
+  --b-deep:#0C2B4C; --b-deep-card:#123A63}
+
+.band-white{--bg:var(--b-white);background:var(--b-white)}
+.band-sand{--bg:var(--b-sand);--line:var(--b-sand-line);background:var(--b-sand)}
+.band-sea{--bg:var(--b-sea);--line:var(--b-sea-line);background:var(--b-sea)}
+.band-deep{--bg:var(--b-deep);--surface:var(--b-deep-card);--ink:#F2F8FC;--muted:#BFD3E3;--line:rgba(255,255,255,.16);
+  --link:#8FDDF3;--btn:#6FD0EE;--btn-ink:#07121F;--sky-soft:rgba(255,255,255,.08);background:var(--b-deep);color:var(--ink)}
+.band-deep h2,.band-deep h3{color:var(--ink)}
+.band-aqua{background:linear-gradient(90deg,#6FD0EE 0%,#3DB4E6 55%,#1E9BD7 100%)!important;color:#0B1F3A}
+.band-aqua h2{color:#0B1F3A}
+.band-aqua p{color:#0B1F3A!important;opacity:.85}
+.band-aqua .btn-light{background:#0B1F3A;color:#fff}
+.band-aqua .btn-line{color:#0B1F3A!important;border-color:rgba(11,31,58,.45)!important}
+section.final.band-aqua{padding-block:72px}
+
+/* squeegee-swipe curve where each band meets the one above it */
+.curve-top{position:relative}
+.curve-top::before{content:"";position:absolute;left:0;right:0;top:-39px;height:40px;background:inherit;pointer-events:none;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40C380 40 760 2 1440 0V40Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40C380 40 760 2 1440 0V40Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat}
+.curve-top:nth-of-type(even)::before{transform:scaleX(-1)}
+@media (max-width:640px){.curve-top::before{top:-23px;height:24px}}
+/* sections that used to share one background get their full breathing room back */
+main>section.curve-top{padding-block:clamp(64px,9vw,104px)}
+.page-hero.band-sea{padding-block:28px 72px}
+.band-aqua.curve-top::before{transform:none!important}

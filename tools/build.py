@@ -304,7 +304,7 @@ def header(pre):
 def footer(pre):
     svc = ''.join(f'<li><a href="{pre}{p}/">{n}</a></li>' for p, n in SERVICES)
     areas = ''.join(f'<li><a href="{pre}{p}/">{n}</a></li>' for p, n, s in AREAS[:6])
-    return f'''<section class="final" aria-label="Get an estimate" style="padding-block:64px">
+    return f'''<section class="final band-aqua curve-top" aria-label="Get an estimate">
   <div class="wrap">
     <div>
       <h2>Ready for flawless windows?</h2>
@@ -396,7 +396,7 @@ def faq_html(faq, pre):
     items = ''.join(
         f'<details><summary>{strip_tags(f["q"])}</summary>{"".join("<p>" + rewrite_links(a, pre) + "</p>" for a in f["a"])}</details>'
         for f in faq)
-    return f'''<section aria-labelledby="faq-h" style="padding-top:0">
+    return f'''<section class="band-sand curve-top" aria-labelledby="faq-h">
   <div class="wrap">
     <div class="head"><p class="kicker">Questions</p><h2 id="faq-h">Common questions</h2></div>
     <div class="faq">{items}</div>
@@ -449,7 +449,7 @@ def crumbs(path, pre, name):
 
 def areas_strip(pre):
     links = ''.join(f'<a href="{pre}{p}/">{landmark(p, "lm lm-pill")}{n}<i>{s}</i></a>' for p, n, s in AREAS)
-    return f'''<section class="est-band" aria-labelledby="ar-h" style="padding-block:56px">
+    return f'''<section class="band-deep curve-top" aria-labelledby="ar-h" style="padding-block:72px">
   <div class="wrap">
     <div class="head" style="margin-bottom:24px"><p class="kicker">Service area</p><h2 id="ar-h">Serving coastal Virginia and North Carolina</h2></div>
     <div class="area-links">{links}</div>
@@ -496,7 +496,7 @@ def build_page(path):
     if path in LANDMARK:
         fig = f'<figure class="page-photo lm-panel">{landmark(path)}<figcaption>{html.escape(name)}</figcaption></figure>'
     out = [head(path, pre, d['title'], d['desc'], d['faq'])]
-    out.append(f'''<section class="page-hero">
+    out.append(f'''<section class="page-hero band-sea">
   <div class="wrap">
     {crumbs(path, pre, name)}
     <div class="page-hero-grid{' no-photo' if not fig else ''}">
@@ -525,13 +525,13 @@ def build_page(path):
     elif path == 'service-areas':
         grid = '<div class="map-wrap">' + area_map(pre) + '</div>' + card_grid([(p, f'{n}, {s}', first_sentence(p)) for p, n, s in AREAS], pre)
     if grid:
-        out.append(f'<section style="padding-block:8px 56px"><div class="wrap">{grid}</div></section>')
+        out.append(f'<section class="band-white curve-top" style="padding-block:56px"><div class="wrap">{grid}</div></section>')
     if path in EXTRAS:
         out.append(EXTRAS[path](pre))
         if path in ('sitemap', 'reviews', 'contact-us', 'projects'):
             rest = []
     if rest:
-        out.append(f'''<section class="page-body" style="padding-top:{"0" if grid else "8px"}">
+        out.append(f'''<section class="page-body band-white curve-top">
   <div class="wrap page-grid">
     <article class="prose">
           {render_blocks(rest, pre)}
@@ -585,7 +585,7 @@ PROJECTS = [f for f in PROJECT_ORDER if f in _have] + sorted(_have - set(PROJECT
 
 def extra_reviews(pre):
     cards = '\n'.join(f'''<figure class="review"><span class="rstars" aria-label="5 out of 5 stars">★★★★★</span><blockquote>{t}</blockquote><figcaption><b>{n}</b><span>{sv}</span></figcaption></figure>''' for n, t, sv in REVIEW_CARDS)
-    return f'''<section style="padding-block:8px 72px"><div class="wrap">
+    return f'''<section class="band-white curve-top" style="padding-block:56px 80px"><div class="wrap">
   <div class="rv-head"><a class="gscore" href="{GMAPS}" target="_blank" rel="noopener" aria-label="Rated 5.0 out of 5 on Google"><b>5.0</b><span class="rstars" aria-hidden="true">★★★★★</span><span>Countless 5-star reviews on Google</span></a>
   <div class="row" style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-primary btn-sm" href="{GMAPS}" target="_blank" rel="noopener">All Google reviews</a><a class="btn btn-line btn-sm" href="{GMAPS}" target="_blank" rel="noopener">Leave a review</a></div></div>
   <div class="reviews">{cards}</div>
@@ -597,14 +597,14 @@ def extra_projects(pre):
     for f in PROJECTS:
         kind = 'Pressure washing' if f.lower().startswith('power') else 'Window cleaning'
         items.append(f'<figure class="proj"><a href="{pre}images/projects/{f}" target="_blank" rel="noopener"><img src="{pre}images/projects/{f}" width="600" height="350" alt="Before and after: {kind.lower()} by Priority Window Cleaning" loading="lazy"></a><figcaption>{kind}</figcaption></figure>')
-    return f'''<section style="padding-block:8px 72px"><div class="wrap">
+    return f'''<section class="band-white curve-top" style="padding-block:56px 80px"><div class="wrap">
   <p class="lede" style="margin-bottom:24px">Real before-and-after photos from Priority Window Cleaning jobs. Tap a photo to see it larger.</p>
   <div class="projects">{"".join(items)}</div>
 </div></section>'''
 
 
 def extra_contact(pre):
-    return f'''<section style="padding-block:8px 72px"><div class="wrap">
+    return f'''<section class="band-white curve-top" style="padding-block:56px 80px"><div class="wrap">
   <div class="contact-grid">
     <a class="ccard" href="tel:{PHONE_TEL}"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-phone"/></svg><span class="lbl">Call</span><b class="num">{PHONE}</b><span>Talk to Jeff directly.</span></a>
     <a class="ccard" href="sms:{PHONE_TEL}"><svg class="ic ic-card" aria-hidden="true"><use href="#ic-ct-text"/></svg><span class="lbl">Text</span><b class="num">{PHONE}</b><span>Send a photo of the job for a faster quote.</span></a>
@@ -618,7 +618,7 @@ def extra_contact(pre):
 
 
 def extra_coupons(pre):
-    return f'''<section style="padding-block:8px 56px"><div class="wrap">
+    return f'''<section class="band-white curve-top" style="padding-block:56px"><div class="wrap">
   <div class="coupons">
     <div class="coupon-card"><span class="lbl">First-time customers</span><b>$25 off</b><span>any one service</span><small>Mention this coupon when you book · {PHONE}</small></div>
     <div class="coupon-card"><span class="lbl">Refer a friend</span><b>$30 off</b><span>your next service</span><small>Mention your referral when you book · {PHONE}</small></div>
@@ -637,7 +637,7 @@ def extra_sitemap(pre):
         ('Legal', [('privacy/', 'Privacy policy'), ('terms/', 'Terms of use')]),
     ]
     cols = ''.join(f'<div class="smap-col"><h2>{html.escape(t)}</h2>{ul(items)}</div>' for t, items in groups)
-    return f'<section style="padding-block:8px 72px"><div class="wrap"><div class="smap">{cols}</div></div></section>'
+    return f'<section class="band-white curve-top" style="padding-block:56px 80px"><div class="wrap"><div class="smap">{cols}</div></div></section>'
 
 
 EXTRAS = {'reviews': extra_reviews, 'projects': extra_projects, 'contact-us': extra_contact, 'coupons': extra_coupons, 'sitemap': extra_sitemap}
