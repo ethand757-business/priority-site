@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://windowcleaningva.com/sitemap.xml

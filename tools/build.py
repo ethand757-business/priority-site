@@ -188,9 +188,10 @@ def header(pre):
     <nav class="links" aria-label="Main">
       <a href="{pre}services/">Services</a>
       <a href="{pre}service-areas/">Areas</a>
-      <a href="{pre}#about">About Jeff</a>
-      <a href="{pre}#reviews">Reviews</a>
-      <a href="{pre}#estimate">Estimate</a>
+      <a href="{pre}projects/">Our work</a>
+      <a href="{pre}about-us/">About</a>
+      <a href="{pre}reviews/">Reviews</a>
+      <a href="{pre}contact-us/">Contact</a>
     </nav>
     <a class="top-phone num" href="tel:{PHONE_TEL}">{PHONE}</a>
     <a class="btn btn-primary btn-sm" href="{pre}#estimate">Free estimate</a>
@@ -226,9 +227,9 @@ def footer(pre):
       </div>
       <div><h4>Services</h4><ul>{svc}</ul></div>
       <div><h4>Areas</h4><ul>{areas}<li><a href="{pre}service-areas/">All areas</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="{pre}#about">About Jeff</a></li><li><a href="{pre}#estimate">Free estimate</a></li><li><a href="{pre}#reviews">Reviews &amp; offers</a></li><li><a href="{pre}{BLOG}/">Tips &amp; articles</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="{pre}about-us/">About us</a></li><li><a href="{pre}projects/">Our work</a></li><li><a href="{pre}reviews/">Reviews</a></li><li><a href="{pre}coupons/">Coupons</a></li><li><a href="{pre}{BLOG}/">Tips &amp; articles</a></li><li><a href="{pre}contact-us/">Contact</a></li></ul></div>
     </div>
-    <p class="legal">© 2026 Priority Window Cleaning &amp; Pressure Washing · Virginia Beach, VA</p>
+    <p class="legal">© 2026 Priority Window Cleaning &amp; Pressure Washing · Virginia Beach, VA · <a href="{pre}privacy/">Privacy</a> · <a href="{pre}terms/">Terms</a> · <a href="{pre}sitemap/">Sitemap</a></p>
   </div>
 </footer>
 <div class="mbar">
@@ -377,11 +378,16 @@ def build_page(path):
     if path.startswith(BLOG + '/'):
         name = article_title(path)
     else:
-        name = NAMES.get(path) or AREA_NAMES.get(path) or {'services': 'Services', 'service-areas': 'Service areas', BLOG: 'Tips & articles'}[path]
-    kicker = 'Service area' if path.startswith('service-areas') else ('Tips &amp; articles' if path.startswith(BLOG) else 'Services')
+        name = NAMES.get(path) or AREA_NAMES.get(path) or {'services': 'Services', 'service-areas': 'Service areas', BLOG: 'Tips & articles'}.get(path) or GENERAL[path][0]
+    if path in GENERAL:
+        kicker = GENERAL[path][1]
+    else:
+        kicker = 'Service area' if path.startswith('service-areas') else ('Tips &amp; articles' if path.startswith(BLOG) else 'Services')
     img = image_for(path)
     if path in ('service-areas', BLOG):
         img = None
+    if path == 'about-us':
+        img = 'images/jeff-about.jpg'
     fig = (f'<figure class="page-photo"><img src="{pre}{img}" width="450" height="300" alt="{html.escape(name)}"></figure>' if img else '')
     out = [head(path, pre, d['title'], d['desc'], d['faq'])]
     out.append(f'''<section class="page-hero">
@@ -413,6 +419,10 @@ def build_page(path):
         grid = card_grid([(p, f'{n}, {s}', first_sentence(p)) for p, n, s in AREAS], pre)
     if grid:
         out.append(f'<section style="padding-block:8px 56px"><div class="wrap">{grid}</div></section>')
+    if path in EXTRAS:
+        out.append(EXTRAS[path](pre))
+        if path in ('sitemap', 'reviews', 'contact-us', 'projects'):
+            rest = []
     if rest:
         out.append(f'''<section class="page-body" style="padding-top:{"0" if grid else "8px"}">
   <div class="wrap page-grid">
@@ -434,12 +444,105 @@ def build_page(path):
     return dest
 
 
+GENERAL = {
+    'about-us': ('About us', 'About'),
+    'contact-us': ('Contact', 'Contact'),
+    'coupons': ('Coupons', 'Offers'),
+    'projects': ('Our work', 'Recent projects'),
+    'reviews': ('Reviews', 'Reviews'),
+    'privacy': ('Privacy policy', 'Legal'),
+    'terms': ('Terms of use', 'Legal'),
+    'sitemap': ('Sitemap', 'Sitemap'),
+}
+REVIEW_CARDS = [
+    ("Johnny E.", "Priority Window Cleaning does great work. I've interacted with Jeff multiple times and he and Matt were 100% on point. I vouch for them wholeheartedly.", "Interior &amp; exterior window cleaning"),
+    ("Christy J.", "Priority Window Cleaning did an amazing job on our home! Super friendly and professional!", "Interior &amp; exterior window cleaning"),
+    ("Kevin L.", "We've been using Priority for window cleaning and power washing our house for a couple of years. Jeff has always been on time and done an excellent job. We would highly recommend him. He does quality work and a fair price.", "Window cleaning &amp; power washing"),
+    ("Kara M.", "I hired these guys to clean the windows, siding, decking and trim on my house. Jeff always showed up on time and was efficient at getting me a quote and getting the work done. He takes pride in his work and made sure we were 100% happy with the job. I wouldn't hesitate to call them again.", "Windows, siding, deck &amp; trim"),
+    ("Lori B.", "His attention to detail doesn't go unnoticed. I always know I can count on him to get the job done correctly and done in a timely manner. He's punctual, orderly, thorough and always checks his work after he has completed it… Thanks Jeff, you make my job as property manager so much easier!", "Property manager · rooftop, skylight &amp; window cleaning"),
+    ("Lauren A.", "Jeff is one of the hardest workers that I know of today. He cleans the windows of the business I work at inside and out (approximately 50 very large) and does a fantastic job every time. They always come out pristine and brand new looking.", "Commercial window cleaning"),
+    ("Filia A.", "Jeff is the most professional, gracious, responsible, on time person I have dealt with! In my business I am dealing with a lot of contractors, but Jeff is the one who deserves the five stars!!!", "Business owner"),
+    ("Amy G.", "Jeff cleans the windows at our store and does an excellent job every time! He definitely goes above and beyond and is professional and friendly too!", "Commercial window cleaning"),
+    ("Kendra P.", "The best I have used. Also cleaned gutters. Price is fair. Will be using again. Highly recommend.", "Windows &amp; gutters"),
+    ("Robin R.", "Jeff Parks at Priority Window Cleaning has done a fabulous job for me. He is on time, efficient and goes the extra mile to make sure your windows and skylights shine.", "Windows &amp; skylights"),
+    ("Troy W.", "Reasonably priced. Power washed my two story house quickly and quality. Super friendly.", "Pressure washing"),
+]
+PROJECTS = sorted(os.listdir(os.path.join(ROOT, 'images', 'projects')))
+
+
+def extra_reviews(pre):
+    cards = '\n'.join(f'''<figure class="review"><span class="rstars" aria-label="5 out of 5 stars">★★★★★</span><blockquote>{t}</blockquote><figcaption><b>{n}</b><span>{sv}</span></figcaption></figure>''' for n, t, sv in REVIEW_CARDS)
+    return f'''<section style="padding-block:8px 72px"><div class="wrap">
+  <div class="rv-head"><a class="gscore" href="{GMAPS}" target="_blank" rel="noopener" aria-label="Rated 5.0 out of 5 on Google"><b>5.0</b><span class="rstars" aria-hidden="true">★★★★★</span><span>Every review on Google is 5 stars</span></a>
+  <div class="row" style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-primary btn-sm" href="{GMAPS}" target="_blank" rel="noopener">All Google reviews</a><a class="btn btn-line btn-sm" href="{GMAPS}" target="_blank" rel="noopener">Leave a review</a></div></div>
+  <div class="reviews">{cards}</div>
+</div></section>'''
+
+
+def extra_projects(pre):
+    items = []
+    for f in PROJECTS:
+        kind = 'Pressure washing' if f.lower().startswith('power') else 'Window cleaning'
+        items.append(f'<figure class="proj"><a href="{pre}images/projects/{f}" target="_blank" rel="noopener"><img src="{pre}images/projects/{f}" width="600" height="350" alt="Before and after: {kind.lower()} by Priority Window Cleaning" loading="lazy"></a><figcaption>{kind}</figcaption></figure>')
+    return f'''<section style="padding-block:8px 72px"><div class="wrap">
+  <p class="lede" style="margin-bottom:24px">Real before-and-after photos from Priority Window Cleaning jobs. Tap a photo to see it larger.</p>
+  <div class="projects">{"".join(items)}</div>
+</div></section>'''
+
+
+def extra_contact(pre):
+    return f'''<section style="padding-block:8px 72px"><div class="wrap">
+  <div class="contact-grid">
+    <a class="ccard" href="tel:{PHONE_TEL}"><span class="lbl">Call</span><b class="num">{PHONE}</b><span>Talk to Jeff directly.</span></a>
+    <a class="ccard" href="sms:{PHONE_TEL}"><span class="lbl">Text</span><b class="num">{PHONE}</b><span>Send a photo of the job for a faster quote.</span></a>
+    <a class="ccard" href="{pre}#estimate"><span class="lbl">Online</span><b>Free estimate</b><span>See a price range and send it to Jeff in a minute.</span></a>
+    <a class="ccard" href="{GMAPS}" target="_blank" rel="noopener"><span class="lbl">Find us</span><b>Virginia Beach, VA</b><span>Open on Google Maps and see our reviews.</span></a>
+    <a class="ccard" href="{FB}" target="_blank" rel="noopener"><span class="lbl">Follow</span><b>Facebook</b><span>Photos of recent jobs and seasonal offers.</span></a>
+    <a class="ccard" href="{pre}service-areas/"><span class="lbl">Service area</span><b>10 towns in VA &amp; NC</b><span>Virginia Beach to Williamsburg and the Outer Banks.</span></a>
+  </div>
+  <div class="map"><iframe title="Priority Window Cleaning on Google Maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.4962390527767!2d-76.0048718!3d36.758661200000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bac170a4c8d639%3A0x80f6850c842eaa15!2sPriority%20Window%20Cleaning!5e0!3m2!1sen!2sus!4v1772738932569!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+</div></section>'''
+
+
+def extra_coupons(pre):
+    return f'''<section style="padding-block:8px 56px"><div class="wrap">
+  <div class="coupons">
+    <div class="coupon-card"><span class="lbl">First-time customers</span><b>$25 off</b><span>any one service</span><small>Mention this coupon when you book · {PHONE}</small></div>
+    <div class="coupon-card"><span class="lbl">Refer a friend</span><b>$30 off</b><span>your next service</span><small>Mention your referral when you book · {PHONE}</small></div>
+  </div>
+</div></section>'''
+
+
+def extra_sitemap(pre):
+    def ul(items):
+        return '<ul>' + ''.join(f'<li><a href="{pre}{p}">{html.escape(n)}</a></li>' for p, n in items) + '</ul>'
+    groups = [
+        ('Main pages', [('', 'Home'), ('about-us/', 'About us'), ('projects/', 'Our work'), ('reviews/', 'Reviews'), ('coupons/', 'Coupons'), ('contact-us/', 'Contact'), (BLOG + '/', 'Tips & articles')]),
+        ('Services', [('services/', 'All services')] + [(p + '/', n) for p, n in SERVICES] + [(p + '/', n) for kids in SUBS.values() for p, n in kids]),
+        ('Service areas', [('service-areas/', 'All service areas')] + [(p + '/', f'{n}, {s}') for p, n, s in AREAS]),
+        ('Tips & articles', [(a + '/', article_title(a)) for a in ARTICLES]),
+        ('Legal', [('privacy/', 'Privacy policy'), ('terms/', 'Terms of use')]),
+    ]
+    cols = ''.join(f'<div class="smap-col"><h2>{html.escape(t)}</h2>{ul(items)}</div>' for t, items in groups)
+    return f'<section style="padding-block:8px 72px"><div class="wrap"><div class="smap">{cols}</div></div></section>'
+
+
+EXTRAS = {'reviews': extra_reviews, 'projects': extra_projects, 'contact-us': extra_contact, 'coupons': extra_coupons, 'sitemap': extra_sitemap}
+
+
+def write_sitemap_xml():
+    urls = [''] + [p + '/' for p in DATA]
+    body = ''.join(f'<url><loc>{DOMAIN}/{u}</loc></url>' for u in urls)
+    open(os.path.join(ROOT, 'sitemap.xml'), 'w').write(f'<?xml version="1.0" encoding="utf-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>\n')
+
+
 def main():
     global FAVICON
     idx = open(os.path.join(ROOT, 'index.html'), encoding='utf-8').read()
     FAVICON = re.search(r'<link rel="icon"[^>]*>', idx).group(0)
     for path in DATA:
         build_page(path)
+    write_sitemap_xml()
     print('built', len(DATA), 'pages')
 
 
