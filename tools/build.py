@@ -359,7 +359,7 @@ def head(path, pre, title, desc, faq):
              'acceptedAnswer': {'@type': 'Answer', 'text': ' '.join(strip_tags(a) for a in f['a'])}} for f in faq]})
     ld_html = '\n'.join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in ld)
     return f'''<!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -396,7 +396,7 @@ def faq_html(faq, pre):
     items = ''.join(
         f'<details><summary>{strip_tags(f["q"])}</summary>{"".join("<p>" + rewrite_links(a, pre) + "</p>" for a in f["a"])}</details>'
         for f in faq)
-    return f'''<section class="band-sand curve-top" aria-labelledby="faq-h">
+    return f'''<section class="band-sea curve-top" aria-labelledby="faq-h">
   <div class="wrap">
     <div class="head"><p class="kicker">Questions</p><h2 id="faq-h">Common questions</h2></div>
     <div class="faq">{items}</div>
@@ -449,7 +449,7 @@ def crumbs(path, pre, name):
 
 def areas_strip(pre):
     links = ''.join(f'<a href="{pre}{p}/">{landmark(p, "lm lm-pill")}{n}<i>{s}</i></a>' for p, n, s in AREAS)
-    return f'''<section class="band-deep curve-top" aria-labelledby="ar-h" style="padding-block:72px">
+    return f'''<section class="band-sky curve-top" aria-labelledby="ar-h" style="padding-block:72px">
   <div class="wrap">
     <div class="head" style="margin-bottom:24px"><p class="kicker">Service area</p><h2 id="ar-h">Serving coastal Virginia and North Carolina</h2></div>
     <div class="area-links">{links}</div>
@@ -496,7 +496,7 @@ def build_page(path):
     if path in LANDMARK:
         fig = f'<figure class="page-photo lm-panel">{landmark(path)}<figcaption>{html.escape(name)}</figcaption></figure>'
     out = [head(path, pre, d['title'], d['desc'], d['faq'])]
-    out.append(f'''<section class="page-hero band-sea">
+    out.append(f'''<section class="page-hero band-sky">
   <div class="wrap">
     {crumbs(path, pre, name)}
     <div class="page-hero-grid{' no-photo' if not fig else ''}">

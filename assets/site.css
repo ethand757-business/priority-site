@@ -611,3 +611,25 @@ section.final.band-aqua{padding-block:72px}
 main>section.curve-top{padding-block:clamp(64px,9vw,104px)}
 .page-hero.band-sea{padding-block:28px 72px}
 .band-aqua.curve-top::before{transform:none!important}
+
+/* ===== lighter palette: white / sky / sea glass, navy only for the badge strip and footer ===== */
+:root{--b-sky:#E6F2FB;--b-sky-line:#CBE1F2;--b-sea:#DFF4F3;--b-sea-line:#BFE4E1}
+.band-sky{--bg:var(--b-sky);--line:var(--b-sky-line);background:var(--b-sky)}
+.band-sea{--bg:var(--b-sea);--line:var(--b-sea-line);background:var(--b-sea)}
+/* About Jeff as a light section */
+.about-band.about-light{background:var(--b-white);color:var(--ink)}
+.about-light h2{color:var(--ink)}
+.about-light p{color:var(--muted)}
+.about-light .kicker{color:var(--link)}
+.about-light .kicker::before{background:var(--blue)}
+.about-light .promise{background:var(--b-sky);border-left-color:var(--blue)}
+.about-light .promise blockquote{color:var(--ink)}
+.about-light .promise cite{color:var(--link)}
+.about-light .btn-light{background:var(--btn);color:var(--btn-ink)}
+.about-light .headshot{box-shadow:0 24px 50px -28px rgba(11,31,58,.5)}
+/* curves never cover content: none under the thin badge strip, extra room above the rest */
+.strip+.curve-top::before{display:none}
+main>section:has(+ .curve-top){padding-bottom:calc(clamp(64px,9vw,104px) + 36px)!important}
+main>.page-hero:has(+ .curve-top){padding-bottom:104px!important}
+main>.hero:has(+ .strip){padding-bottom:clamp(56px,7vw,88px)!important}
+main:has(+ .curve-top)>section:last-child{padding-bottom:calc(clamp(64px,9vw,104px) + 36px)!important}
