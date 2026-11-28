@@ -333,10 +333,7 @@ def footer(pre):
     </div>
     <p class="legal">© 2026 Priority Window Cleaning &amp; Pressure Washing · Virginia Beach, VA · Licensed &amp; insured · <a href="{pre}privacy/">Privacy</a> · <a href="{pre}terms/">Terms</a> · <a href="{pre}sitemap/">Sitemap</a></p>
   </div>
-</footer>
-<div class="mbar">
-  <button class="btn mbar-ask" type="button" data-chat-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 9h8M8 12h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Ask a question</button>
-</div>'''
+</footer>'''
 
 
 FAVICON = None

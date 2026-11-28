@@ -563,3 +563,11 @@ section.chat-box{padding:0}
 .mnav-contact .btn{margin:0!important;gap:8px}
 .mnav-contact .ic{width:22px;height:22px}
 .mnav-phone{margin:12px 0 0;text-align:center;color:var(--muted);font-weight:600}
+/* phone: "Ask a question" is a labeled button in the bottom-right corner */
+@media (max-width:700px){
+  .mbar{display:none!important}
+  .chat-fab{display:flex!important;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));padding:13px 18px 13px 14px;background:var(--ask-bg);color:var(--ask-ink);box-shadow:0 10px 26px -8px rgba(11,31,58,.55)}
+  .chat-fab span{position:static;width:auto;height:auto;overflow:visible;clip:auto}
+  html.chat-open .chat-fab,html.mnav-open .chat-fab{display:none!important}
+  footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+}
