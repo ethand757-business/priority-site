@@ -93,7 +93,38 @@ def review_for(path):
     return REVIEWS['johnny']
 
 
+# Higgsfield-generated photos for the main service pages (replacing stock images).
+IMG_OVERRIDE = {
+    'services/residential-window-washing': 'images/site/hf-residential.jpg',
+    'services/commercial-window-washing': 'images/site/hf-commercial.jpg',
+    'services/waterfed-pole-window-cleaning': 'images/site/hf-waterfed.jpg',
+    'services/pressure-washing': 'images/site/hf-driveway.jpg',
+    'services/pressure-washing/driveway-cleaning': 'images/site/hf-driveway.jpg',
+    'services/soft-washing': 'images/site/hf-softwash.jpg',
+    'services/soft-washing/house-washing': 'images/site/hf-softwash.jpg',
+    'services/holiday-lighting': 'images/site/hf-holiday.jpg',
+}
+# Service icon (symbol id in assets/icons.txt) for each service page.
+ICON = {
+    'services/residential-window-washing': 'window', 'services/commercial-window-washing': 'store',
+    'services/waterfed-pole-window-cleaning': 'pole', 'services/pressure-washing': 'drive',
+    'services/pressure-washing/driveway-cleaning': 'drive', 'services/pressure-washing/concrete-cleaning': 'drive',
+    'services/pressure-washing/commercial-pressure-washing': 'store', 'services/soft-washing': 'house',
+    'services/soft-washing/house-washing': 'house', 'services/soft-washing/roof-cleaning': 'roof',
+    'services/soft-washing/gutter-cleaning': 'gutter', 'services/soft-washing/awning-cleaning': 'gutter',
+    'services/holiday-lighting': 'lights',
+}
+ICONS_SPRITE = open(os.path.join(ROOT, 'assets', 'icons.txt'), encoding='utf-8').read()
+
+
+def icon(path, cls='ic'):
+    i = ICON.get(path)
+    return f'<svg class="{cls}" aria-hidden="true"><use href="#ic-{i}"/></svg>' if i else ''
+
+
 def image_for(path):
+    if path in IMG_OVERRIDE:
+        return IMG_OVERRIDE[path]
     img = DATA[path].get('img')
     return 'images/site/' + os.path.basename(img) if img else None
 
@@ -213,7 +244,7 @@ def header(pre):
             continue
         cols = ''.join(
             f'<div class="menu-col">{"<p class=\"menu-h\">" + html.escape(h) + "</p>" if h else ""}<ul>'
-            + ''.join(f'<li><a href="{L(p)}">{html.escape(n)}</a></li>' for p, n in items) + '</ul></div>'
+            + ''.join(f'<li><a href="{L(p)}">{icon(p)}{html.escape(n)}</a></li>' for p, n in items) + '</ul></div>'
             for h, items in groups)
         mid = f'menu-{i}'
         desk.append(f'''<div class="nav-item">
@@ -325,7 +356,7 @@ def head(path, pre, title, desc, faq):
 {ld_html}
 </head>
 <body>
-{header(pre)}
+{ICONS_SPRITE}{header(pre)}
 <main>'''
 
 
@@ -367,7 +398,7 @@ def sidebar(path, pre):
     else:
         links = SERVICES
         title = 'Our services'
-    lis = ''.join(f'<li><a href="{pre}{p}/"{" aria-current=\"page\"" if p == path else ""}>{n}</a></li>' for p, n in links)
+    lis = ''.join(f'<li><a href="{pre}{p}/"{" aria-current=\"page\"" if p == path else ""}>{icon(p)}{n}</a></li>' for p, n in links)
     return f'''<aside class="side">
         <div class="side-cta">
           <p class="lbl">Free estimate</p>
@@ -447,6 +478,7 @@ def build_page(path):
     <div class="page-hero-grid{' no-photo' if not fig else ''}">
       <div>
         <p class="kicker">{kicker}</p>
+        {icon(path, 'ic ic-hero')}
         <h1>{rewrite_links(h1["html"], pre) if h1 else html.escape(name)}</h1>
         {('<p class="lede">' + rewrite_links(intro['html'], pre) + '</p>') if intro else ''}
         <div class="ctas">
@@ -598,6 +630,8 @@ def main():
     idx = open(os.path.join(ROOT, 'index.html'), encoding='utf-8').read()
     FAVICON = re.search(r'<link rel="icon"[^>]*>', idx).group(0)
     idx = re.sub(r'<header class="top">.*?</header>(\n<script src="assets/nav\.js[^"]*" defer></script>)?', lambda m: header(''), idx, count=1, flags=re.S)
+    idx = re.sub(r'<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ic-.*?</defs></svg>\n', '', idx, flags=re.S)
+    idx = idx.replace('<body>\n', '<body>\n' + ICONS_SPRITE, 1)
     idx = re.sub(r'href="assets/site\.css(\?v=\w+)?"', f'href="assets/site.css?v={CSS_V}"', idx)
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(idx)
     for path in DATA:

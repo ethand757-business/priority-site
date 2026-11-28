@@ -358,3 +358,25 @@ html.mnav-open{overflow:hidden}
 .top .btn{white-space:nowrap}
 html.mnav-open .mbar{display:none}
 @media (max-width:520px){.top>.wrap>.btn-primary{display:none}.logo-text{font-size:1.3rem}.top .wrap{gap:12px}}
+/* ---------- service icons (Higgsfield set) & photos ---------- */
+.ic{width:22px;height:22px;flex:none;color:var(--ink);overflow:visible}
+.ic *{vector-effect:non-scaling-stroke;stroke-width:1.4px}
+.svc .tag{display:inline-flex;align-items:center;gap:8px}
+.svc .tag .ic{width:20px;height:20px;color:var(--link)}
+.ic-row{width:48px!important;height:48px!important;color:var(--ink)}
+.ic-hero{width:56px;height:56px;margin-top:14px;color:var(--ink)}
+.svc-photo{width:calc(100% + 64px);max-width:none;height:auto;aspect-ratio:3/2;object-fit:cover;margin:-32px -32px 6px;border-radius:var(--r) var(--r) 0 0}
+@media (max-width:480px){.svc-photo{width:calc(100% + 64px)}}
+nav.links .menu a{display:flex;align-items:center;gap:10px}
+.menu .ic{width:24px;height:24px;color:var(--ink)}
+.side-box li a{display:flex;align-items:center;gap:10px}
+.side-box .ic{width:22px;height:22px}
+.menu-col{flex:none}
+.menu.wide{gap:36px}
+.ic-hero{display:block;margin:14px 0 0}
+.top>.wrap{position:relative}
+.nav-item:has(.menu.wide){position:static}
+.menu.wide{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;max-width:none;top:calc(100% - 2px)}
+.nav-item.open .menu.wide{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.menu.wide .menu-col{min-width:0}
+nav.links .menu.wide a{white-space:normal;line-height:1.3}
