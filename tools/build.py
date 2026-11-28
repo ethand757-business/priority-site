@@ -289,7 +289,11 @@ def header(pre):
       <a class="mnav-link" href="{pre}">Home</a>
       {"".join(phone)}
       <a class="btn btn-primary" href="{pre}#estimate">Get my estimate</a>
-      <a class="btn btn-line num" href="tel:{PHONE_TEL}">Call {PHONE}</a>
+      <div class="mnav-contact">
+        <a class="btn btn-line" href="tel:{PHONE_TEL}"><svg class="ic" aria-hidden="true"><use href="#ic-ct-phone"/></svg>Call</a>
+        <a class="btn btn-line" href="sms:{PHONE_TEL}"><svg class="ic" aria-hidden="true"><use href="#ic-ct-text"/></svg>Text</a>
+      </div>
+      <p class="mnav-phone num">{PHONE}</p>
     </div>
   </nav>
 </header>
@@ -331,10 +335,7 @@ def footer(pre):
   </div>
 </footer>
 <div class="mbar">
-  <a class="btn btn-line" href="tel:{PHONE_TEL}">Call</a>
-  <a class="btn btn-line" href="sms:{PHONE_TEL}">Text</a>
-  <button class="btn btn-line mbar-ask" type="button" data-chat-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Ask</button>
-  <a class="btn btn-primary" href="{pre}#estimate">Estimate</a>
+  <button class="btn mbar-ask" type="button" data-chat-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 9h8M8 12h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Ask a question</button>
 </div>'''
 
 

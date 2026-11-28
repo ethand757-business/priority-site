@@ -555,3 +555,11 @@ section.chat-box{padding:0}
 :root[data-theme="dark"]{--ask-bg:#FFFFFF;--ask-ink:#0B1F3A}
 .mbar .mbar-ask{background:var(--ask-bg);border-color:var(--ask-bg);color:var(--ask-ink);box-shadow:0 6px 16px -8px rgba(30,155,215,.8)}
 .mbar .mbar-ask svg path{stroke-width:2.4}
+/* phone: bottom bar is just "Ask a question"; Call/Text/Estimate live in the menu panel */
+.mbar{grid-template-columns:1fr!important}
+.mbar .mbar-ask{width:100%;padding:15px 16px!important;font-size:1rem;gap:10px}
+.mbar .mbar-ask svg{width:22px;height:22px}
+.mnav-contact{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.mnav-contact .btn{margin:0!important;gap:8px}
+.mnav-contact .ic{width:22px;height:22px}
+.mnav-phone{margin:12px 0 0;text-align:center;color:var(--muted);font-weight:600}
