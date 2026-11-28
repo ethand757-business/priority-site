@@ -396,7 +396,7 @@ def faq_html(faq, pre):
     items = ''.join(
         f'<details><summary>{strip_tags(f["q"])}</summary>{"".join("<p>" + rewrite_links(a, pre) + "</p>" for a in f["a"])}</details>'
         for f in faq)
-    return f'''<section class="band-sea curve-top" aria-labelledby="faq-h">
+    return f'''<section class="band-deep curve-top" aria-labelledby="faq-h">
   <div class="wrap">
     <div class="head"><p class="kicker">Questions</p><h2 id="faq-h">Common questions</h2></div>
     <div class="faq">{items}</div>
