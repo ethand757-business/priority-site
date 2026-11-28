@@ -31,13 +31,15 @@
     { k: ['photo', 'picture', 'before and after', 'before & after', 'work', 'example', 'portfolio'], a: 'Here are real before-and-after photos from Jeff’s jobs.', l: [['Our work', 'projects/']] },
     { k: ['review', 'rating', 'stars', 'google'], a: 'We have countless 5-star reviews on Google. Customers mention Jeff being on time, thorough and fairly priced.', l: [['Read reviews', 'reviews/']] },
     { k: ['who', 'owner', 'jeff', 'experience', 'how long', 'years'], a: 'Priority Window Cleaning is owner-operated by Jeff Parks, with more than 20 years of experience and a focus on high-end residential homes. The business is fully licensed and insured.', l: [['About us', 'about-us/']] },
-    { k: ['phone', 'call', 'number', 'contact', 'text', 'reach'], a: 'Call or text Jeff at ' + PHONE + '.', jeff: true }
+    { k: ['phone', 'call', 'number', 'contact', 'text', 'reach'], a: "You can call or text Jeff directly at " + PHONE + ". He's happy to answer questions or get you scheduled.", jeff: true }
   ];
   var CHIPS = [['What services do you offer?', 'services'], ['Do you serve my area?', 'area'], ['How do I get a price?', 'price'], ['Any coupons?', 'coupon']];
 
   function norm(s) { return ' ' + s.toLowerCase().replace(/[^a-z0-9&' -]+/g, ' ') + ' '; }
   function match(q) {
     var t = norm(q), best = null, score = 0;
+    // Anyone asking to call, text or get the number gets Jeff's number right away.
+    if (/\b(text|texting|txt|call|calling|phone|number|cell|reach|contact|talk to)\b/.test(t)) return TOPICS[TOPICS.length - 1];
     var zip = q.match(/\b(\d{5})\b/);
     if (zip) {
       var p = +zip[1].slice(0, 3), ok = (p >= 233 && p <= 236) || p === 279;
@@ -80,7 +82,7 @@
     if (askJeff) {
       var j = document.createElement('div'); j.className = 'msg-jeff';
       var body = question ? 'Hi Jeff, question from your website: ' + question : 'Hi Jeff, I have a question:';
-      j.innerHTML = '<a class="mj-text" href="sms:' + TEL + '?&body=' + encodeURIComponent(body) + '">Text Jeff</a><a class="mj-call" href="tel:' + TEL + '">Call ' + PHONE + '</a>';
+      j.innerHTML = '<a class="mj-text" href="sms:' + TEL + '?&body=' + encodeURIComponent(body) + '">Text ' + PHONE + '</a><a class="mj-call" href="tel:' + TEL + '">Call ' + PHONE + '</a>';
       m.appendChild(j);
     }
     log.appendChild(m); log.scrollTop = log.scrollHeight;
