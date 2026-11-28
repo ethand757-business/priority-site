@@ -95,7 +95,7 @@ def review_for(path):
 
 # Higgsfield-generated photos for the main service pages (replacing stock images).
 IMG_OVERRIDE = {
-    'services/residential-window-washing': 'images/site/hf-residential-wfp.jpg',
+    'services/residential-window-washing': 'images/site/hf-residential-wfp2.jpg',
     'services/commercial-window-washing': 'images/site/hf-commercial.jpg',
     'services/waterfed-pole-window-cleaning': 'images/site/hf-waterfed.jpg',
     'services/pressure-washing': 'images/site/hf-driveway.jpg',
